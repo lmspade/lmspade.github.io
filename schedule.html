@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>DAILY ROUTINE</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f5f0;
+    --gray-1: #1a1a1a;
+    --gray-2: #2a2a2a;
+    --gray-3: #555;
+    --gray-4: #999;
+    --gray-5: #ccc;
+    --accent: #f5f5f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── GRAIN OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+  }
+
+  /* ─── TOP BAR ─── */
+  .topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--gray-2);
+    position: sticky;
+    top: 0;
+    background: var(--black);
+    z-index: 100;
+  }
+
+  .topbar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 4px;
+    color: var(--white);
+  }
+
+  .live-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    color: var(--gray-4);
+    letter-spacing: 1px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    padding: 36px 24px 28px;
+    border-bottom: 1px solid var(--gray-2);
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gray-4);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .hero-date {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    letter-spacing: 2px;
+    color: var(--white);
+  }
+
+  .hero-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-4);
+    letter-spacing: 2px;
+    margin-top: 10px;
+  }
+
+  /* ─── TABS ─── */
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--gray-2);
+    position: sticky;
+    top: 57px;
+    background: var(--black);
+    z-index: 99;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 16px 0;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-4);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+
+  .tab.active {
+    color: var(--white);
+    border-bottom-color: var(--white);
+  }
+
+  /* ─── CONTENT PANELS ─── */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ─── PROGRESS BAR ─── */
+  .progress-section {
+    padding: 20px 24px 0;
+  }
+
+  .progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .progress-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gray-4);
+    text-transform: uppercase;
+  }
+
+  .progress-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-4);
+  }
+
+  .progress-track {
+    height: 2px;
+    background: var(--gray-2);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--white);
+    border-radius: 1px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 0%;
+  }
+
+  /* ─── STEP LIST ─── */
+  .steps {
+    padding: 16px 0 32px;
+  }
+
+  .step {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0 24px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .step:nth-child(1)  { animation-delay: 0.05s; }
+  .step:nth-child(2)  { animation-delay: 0.08s; }
+  .step:nth-child(3)  { animation-delay: 0.11s; }
+  .step:nth-child(4)  { animation-delay: 0.14s; }
+  .step:nth-child(5)  { animation-delay: 0.17s; }
+  .step:nth-child(6)  { animation-delay: 0.20s; }
+  .step:nth-child(7)  { animation-delay: 0.23s; }
+  .step:nth-child(8)  { animation-delay: 0.26s; }
+  .step:nth-child(9)  { animation-delay: 0.29s; }
+  .step:nth-child(10) { animation-delay: 0.32s; }
+  .step:nth-child(11) { animation-delay: 0.35s; }
+  .step:nth-child(12) { animation-delay: 0.38s; }
+  .step:nth-child(13) { animation-delay: 0.41s; }
+
+  .step-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    width: 100%;
+    padding: 16px 18px;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+    border: 1px solid transparent;
+  }
+
+  .step:active .step-inner {
+    background: var(--gray-1);
+  }
+
+  .step.done .step-inner {
+    border-color: var(--gray-2);
+    background: var(--gray-1);
+  }
+
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-3);
+    min-width: 18px;
+    margin-top: 2px;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  .step.done .step-num { color: var(--gray-2); }
+
+  .step-check {
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--gray-3);
+    border-radius: 50%;
+    min-width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 1px;
+  }
+
+  .step.done .step-check {
+    background: var(--white);
+    border-color: var(--white);
+  }
+
+  .check-icon {
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: all 0.2s ease 0.05s;
+  }
+
+  .step.done .check-icon {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .step-body { flex: 1; }
+
+  .step-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.3;
+    transition: color 0.2s, text-decoration 0.2s;
+  }
+
+  .step.done .step-title {
+    color: var(--gray-3);
+    text-decoration: line-through;
+    text-decoration-color: var(--gray-3);
+  }
+
+  .step-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 300;
+    color: var(--gray-4);
+    line-height: 1.6;
+    margin-top: 4px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    opacity: 0;
+  }
+
+  .step-desc.visible {
+    max-height: 200px;
+    opacity: 1;
+    margin-top: 6px;
+  }
+
+  .step-tag {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    background: var(--gray-2);
+    padding: 3px 7px;
+    border-radius: 2px;
+    margin-top: 6px;
+  }
+
+  /* ─── SPECIAL STEP: POSTURE ─── */
+  .step.special .step-inner {
+    border: 1px solid var(--gray-2);
+  }
+
+  .step.special .step-title {
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  /* ─── RESET BUTTON ─── */
+  .reset-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 24px 32px;
+    padding: 14px;
+    background: transparent;
+    border: 1px solid var(--gray-2);
+    border-radius: 8px;
+    color: var(--gray-4);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .reset-btn:active {
+    background: var(--gray-1);
+    color: var(--white);
+    border-color: var(--gray-3);
+  }
+
+  /* ─── QUOTE CARD ─── */
+  .quote-card {
+    margin: 0 24px 24px;
+    padding: 20px;
+    border: 1px solid var(--gray-2);
+    border-radius: 8px;
+    animation: fadeUp 0.5s ease 0.3s both;
+  }
+
+  .quote-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gray-3);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .quote-text {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--gray-5);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* ─── STATS CARD ─── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 20px 24px 0;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+
+  .stat-card {
+    padding: 16px;
+    border: 1px solid var(--gray-2);
+    border-radius: 8px;
+  }
+
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: 1px;
+  }
+
+  .stat-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--gray-4);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ─── OUTFIT SECTION ─── */
+  .outfit-section {
+    padding: 20px 24px 32px;
+    animation: fadeUp 0.4s ease 0.1s both;
+  }
+
+  .section-header {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gray-4);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .outfit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .outfit-item {
+    border: 1px solid var(--gray-2);
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .outfit-item.picked {
+    border-color: var(--white);
+    background: var(--gray-1);
+  }
+
+  .outfit-icon {
+    font-size: 22px;
+    margin-bottom: 6px;
+  }
+
+  .outfit-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .outfit-note {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    color: var(--gray-4);
+    margin-top: 3px;
+    font-weight: 300;
+  }
+
+  .outfit-check {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--gray-3);
+    border-radius: 50%;
+    transition: all 0.2s;
+  }
+
+  .outfit-item.picked .outfit-check {
+    background: var(--white);
+    border-color: var(--white);
+  }
+
+  .outfit-notes-input {
+    width: 100%;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
+    border-radius: 8px;
+    padding: 14px;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    resize: none;
+    outline: none;
+    line-height: 1.6;
+    min-height: 80px;
+    transition: border-color 0.2s;
+  }
+
+  .outfit-notes-input::placeholder { color: var(--gray-3); }
+  .outfit-notes-input:focus { border-color: var(--gray-4); }
+
+  /* ─── TIPS SECTION ─── */
+  .tips-section {
+    padding: 0 24px 32px;
+    animation: fadeUp 0.4s ease 0.2s both;
+  }
+
+  .tip-item {
+    display: flex;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--gray-2);
+  }
+
+  .tip-item:last-child { border-bottom: none; }
+
+  .tip-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-3);
+    min-width: 18px;
+    margin-top: 2px;
+  }
+
+  .tip-content {}
+
+  .tip-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--white);
+    margin-bottom: 3px;
+  }
+
+  .tip-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--gray-4);
+    line-height: 1.6;
+  }
+
+  /* ─── STREAK SECTION ─── */
+  .streak-section {
+    padding: 20px 24px 0;
+    animation: fadeUp 0.4s ease 0.1s both;
+  }
+
+  .streak-card {
+    border: 1px solid var(--gray-2);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .streak-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: 2px;
+  }
+
+  .streak-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gray-4);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .streak-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--gray-2);
+    transition: background 0.3s;
+  }
+
+  .dot.filled { background: var(--white); }
+
+  .streak-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s;
+    margin-bottom: 16px;
+  }
+
+  .streak-btn:active { opacity: 0.8; }
+
+  /* ─── COMPLETE BANNER ─── */
+  .complete-banner {
+    display: none;
+    margin: 0 24px 20px;
+    padding: 18px;
+    border: 1px solid var(--gray-5);
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .complete-banner.show { display: block; }
+
+  .complete-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .complete-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gray-4);
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .blink { animation: pulse 2s ease infinite; }
+
+  /* ─── SIDE QUESTS ─── */
+  .quests-hero {
+    padding: 32px 24px 20px;
+    border-bottom: 1px solid var(--gray-2);
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .quests-hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gray-4);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .quests-hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px;
+    line-height: 1;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+
+  .quests-hero-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gray-4);
+    letter-spacing: 1px;
+    margin-top: 8px;
+  }
+
+  .quests-controls {
+    padding: 20px 24px 0;
+    animation: fadeUp 0.4s ease 0.1s both;
+  }
+
+  .gen-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  .gen-btn:active { opacity: 0.8; }
+  .gen-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .gen-spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(0,0,0,0.2);
+    border-top-color: var(--black);
+    border-radius: 50%;
+    display: none;
+    animation: spin 0.7s linear infinite;
+  }
+
+  .gen-spinner.show { display: block; }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .gen-category-row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .gen-category-row::-webkit-scrollbar { display: none; }
+
+  .cat-btn {
+    flex-shrink: 0;
+    padding: 8px 14px;
+    background: transparent;
+    border: 1px solid var(--gray-2);
+    border-radius: 100px;
+    color: var(--gray-4);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .cat-btn.active {
+    background: var(--gray-2);
+    border-color: var(--gray-3);
+    color: var(--white);
+  }
+
+  .quests-container {
+    padding: 20px 24px 0;
+    min-height: 200px;
+  }
+
+  .quests-empty {
+    text-align: center;
+    padding: 48px 0;
+  }
+
+  .quests-empty-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    opacity: 0.3;
+  }
+
+  .quests-empty-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gray-3);
+  }
+
+  .quest-card {
+    border: 1px solid var(--gray-2);
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    animation: fadeUp 0.35s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quest-card:nth-child(1) { animation-delay: 0.0s; }
+  .quest-card:nth-child(2) { animation-delay: 0.07s; }
+  .quest-card:nth-child(3) { animation-delay: 0.14s; }
+
+  .quest-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--gray-3);
+    border-radius: 3px 0 0 3px;
+    transition: background 0.2s;
+  }
+
+  .quest-card.completed {
+    background: var(--gray-1);
+    border-color: var(--gray-2);
+  }
+
+  .quest-card.completed::before {
+    background: var(--white);
+  }
+
+  .quest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .quest-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+    line-height: 1.3;
+    flex: 1;
+  }
+
+  .quest-card.completed .quest-title {
+    color: var(--gray-3);
+    text-decoration: line-through;
+    text-decoration-color: var(--gray-3);
+  }
+
+  .quest-complete-ring {
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--gray-3);
+    border-radius: 50%;
+    min-width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    margin-top: 1px;
+  }
+
+  .quest-card.completed .quest-complete-ring {
+    background: var(--white);
+    border-color: var(--white);
+  }
+
+  .quest-check-svg {
+    opacity: 0;
+    transform: scale(0.4);
+    transition: all 0.2s ease 0.05s;
+  }
+
+  .quest-card.completed .quest-check-svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .quest-desc {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12.5px;
+    font-weight: 300;
+    color: var(--gray-4);
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+
+  .quest-footer {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .quest-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    background: var(--gray-2);
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .quest-xp {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: var(--gray-4);
+  }
+
+  .quest-difficulty {
+    margin-left: auto;
+    display: flex;
+    gap: 3px;
+  }
+
+  .diff-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gray-2);
+  }
+
+  .diff-dot.filled { background: var(--gray-4); }
+
+  .quests-history-section {
+    padding: 24px 0 0;
+    border-top: 1px solid var(--gray-2);
+    margin-top: 8px;
+  }
+
+  .history-list {
+    padding: 0 24px;
+  }
+
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray-2);
+  }
+
+  .history-item:last-child { border-bottom: none; }
+
+  .history-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    color: var(--gray-4);
+    flex: 1;
+  }
+
+  .history-xp {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gray-3);
+    letter-spacing: 1px;
+  }
+
+  .xp-total-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    border-top: 1px solid var(--gray-2);
+    margin-top: 4px;
+  }
+
+  .xp-total-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gray-4);
+    text-transform: uppercase;
+  }
+
+  .xp-total-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 0; }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-title">DAILY</div>
+  <div class="live-time" id="liveTime">--:--</div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">Today</div>
+  <div class="hero-date" id="heroDate">LOADING</div>
+  <div class="hero-sub" id="heroSub">LOADING...</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('morning')">Morning</div>
+  <div class="tab" onclick="switchTab('evening')">Evening</div>
+  <div class="tab" onclick="switchTab('streak')">Streak</div>
+  <div class="tab" onclick="switchTab('quests')">Quests</div>
+</div>
+
+<!-- ════════════════════════════════ -->
+<!-- MORNING PANEL -->
+<!-- ════════════════════════════════ -->
+<div class="panel active" id="panel-morning">
+  <div class="progress-section">
+    <div class="progress-row">
+      <span class="progress-label">Progress</span>
+      <span class="progress-count" id="mCount">0 / 13</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="mFill"></div>
+    </div>
+  </div>
+
+  <div id="completeBanner" class="complete-banner">
+    <div class="complete-title">READY.</div>
+    <div class="complete-sub">All steps complete — go get it.</div>
+  </div>
+
+  <div class="steps" id="morningSteps">
+    <!-- Steps injected by JS -->
+  </div>
+
+  <div class="quote-card">
+    <div class="quote-label">Remember</div>
+    <div class="quote-text" id="dailyQuote">Loading quote...</div>
+  </div>
+
+  <button class="reset-btn" onclick="resetMorning()">
+    ↺ &nbsp; Reset Routine
+  </button>
+</div>
+
+<!-- ════════════════════════════════ -->
+<!-- EVENING PANEL -->
+<!-- ════════════════════════════════ -->
+<div class="panel" id="panel-evening">
+  <div class="progress-section">
+    <div class="progress-row">
+      <span class="progress-label">Progress</span>
+      <span class="progress-count" id="eCount">0 / 8</span>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="eFill"></div>
+    </div>
+  </div>
+
+  <div class="steps" id="eveningSteps"></div>
+
+  <!-- Outfit Planner -->
+  <div class="outfit-section">
+    <div class="section-header">Tomorrow's Outfit</div>
+    <div class="outfit-grid">
+      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="top">
+        <div class="outfit-check"></div>
+        <div class="outfit-icon">👕</div>
+        <div class="outfit-label">Top</div>
+        <div class="outfit-note">shirt / hoodie / tee</div>
+      </div>
+      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="bottoms">
+        <div class="outfit-check"></div>
+        <div class="outfit-icon">👖</div>
+        <div class="outfit-label">Bottoms</div>
+        <div class="outfit-note">pants / shorts / jeans</div>
+      </div>
+      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="shoes">
+        <div class="outfit-check"></div>
+        <div class="outfit-icon">👟</div>
+        <div class="outfit-label">Shoes</div>
+        <div class="outfit-note">sneakers / boots</div>
+      </div>
+      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="accessories">
+        <div class="outfit-check"></div>
+        <div class="outfit-icon">⌚</div>
+        <div class="outfit-label">Extras</div>
+        <div class="outfit-note">watch / belt / socks</div>
+      </div>
+    </div>
+    <textarea class="outfit-notes-input" placeholder="Any outfit notes for tomorrow? (e.g. 'wear the navy crewneck, white nike dunks')..." rows="3" id="outfitNotes"></textarea>
+  </div>
+
+  <!-- Wind-down tips -->
+  <div class="tips-section">
+    <div class="section-header">Wind-Down Tips</div>
+    <div class="tip-item">
+      <div class="tip-num">01</div>
+      <div class="tip-content">
+        <div class="tip-title">No screens 30 min before sleep</div>
+        <div class="tip-desc">Blue light messes with melatonin. Swap the phone for a book or music. Your morning self will thank you.</div>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">02</div>
+      <div class="tip-content">
+        <div class="tip-title">Keep your room dark & cool</div>
+        <div class="tip-desc">Ideal sleep temp is around 65–68°F. Cool and dark = deep sleep = easier wake-up.</div>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">03</div>
+      <div class="tip-content">
+        <div class="tip-title">Same bedtime every night</div>
+        <div class="tip-desc">Your internal clock runs on consistency. Irregular sleep makes mornings brutal — lock in a time and stick to it.</div>
+      </div>
+    </div>
+  </div>
+
+  <button class="reset-btn" onclick="resetEvening()">↺ &nbsp; Reset Evening</button>
+</div>
+
+<!-- ════════════════════════════════ -->
+<!-- QUESTS PANEL -->
+<!-- ════════════════════════════════ -->
+<div class="panel" id="panel-quests">
+  <div class="quests-hero">
+    <div class="quests-hero-label">AI-Generated</div>
+    <div class="quests-hero-title">SIDE QUESTS</div>
+    <div class="quests-hero-sub">Random missions. No reason. Just do it.</div>
+  </div>
+
+  <div class="quests-controls">
+    <button class="gen-btn" id="genBtn" onclick="generateQuests()">
+      <span id="genBtnText">Generate Quests</span>
+      <div class="gen-spinner" id="genSpinner"></div>
+    </button>
+    <div class="gen-category-row">
+      <button class="cat-btn active" onclick="selectCat(this,'random')">Random</button>
+      <button class="cat-btn" onclick="selectCat(this,'social')">Social</button>
+      <button class="cat-btn" onclick="selectCat(this,'physical')">Physical</button>
+      <button class="cat-btn" onclick="selectCat(this,'creative')">Creative</button>
+      <button class="cat-btn" onclick="selectCat(this,'brain')">Brain</button>
+    </div>
+  </div>
+
+  <div id="questsContainer" class="quests-container">
+    <div class="quests-empty">
+      <div class="quests-empty-icon">⚡</div>
+      <div class="quests-empty-text">Hit generate to get your quests.</div>
+    </div>
+  </div>
+
+  <div id="questsHistory" class="quests-history-section" style="display:none;">
+    <div class="section-header" style="padding: 0 24px; margin-bottom: 12px;">Completed Quests</div>
+    <div id="historyList" class="history-list"></div>
+  </div>
+  <div style="height:40px;"></div>
+</div>
+
+<!-- ════════════════════════════════ -->
+<!-- STREAK PANEL -->
+<!-- ════════════════════════════════ -->
+<div class="panel" id="panel-streak">
+  <div class="streak-section">
+    <div class="streak-card">
+      <div class="streak-num" id="streakNum">0</div>
+      <div class="streak-label">Day Streak</div>
+      <div class="streak-dots" id="streakDots"></div>
+    </div>
+
+    <button class="streak-btn" onclick="markStreakDay()">Mark Today Complete</button>
+
+    <div class="stats-row" style="padding: 0; margin-bottom: 16px;">
+      <div class="stat-card">
+        <div class="stat-val" id="totalDays">0</div>
+        <div class="stat-lbl">Total Days</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-val" id="bestStreak">0</div>
+        <div class="stat-lbl">Best Streak</div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="section-header" style="padding: 0; margin-bottom: 12px;">Why This Routine Works</div>
+    <div class="tip-item">
+      <div class="tip-num">→</div>
+      <div class="tip-content">
+        <div class="tip-title">Cold water on your face</div>
+        <div class="tip-desc">Activates the dive reflex — drops your heart rate slightly and sharpens focus. Natural espresso shot.</div>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">→</div>
+      <div class="tip-content">
+        <div class="tip-title">Bright light immediately</div>
+        <div class="tip-desc">Stops melatonin production and resets your circadian clock. The single fastest way to actually wake up.</div>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-num">→</div>
+      <div class="tip-content">
+        <div class="tip-title">Hydration first</div>
+        <div class="tip-desc">You've been without water for 7–8 hours. That 9oz re-activates your metabolism and kills morning brain fog.</div>
+      </div>
+    </div>
+    <div class="tip-item" style="border-bottom: none;">
+      <div class="tip-num">→</div>
+      <div class="tip-content">
+        <div class="tip-title">Posture check at the door</div>
+        <div class="tip-desc">Studies show body posture affects confidence. Walk out standing tall and your brain actually perceives you as more capable.</div>
+      </div>
+    </div>
+  </div>
+  <div style="height: 32px;"></div>
+</div>
+
+<script>
+// ─── DATA ────────────────────────────────────────────────────────
+
+const morningSteps = [
+  {
+    title: "Alarm goes off — stand up immediately",
+    desc: "The moment your alarm sounds, plant your feet on the floor. Don't negotiate with yourself, don't check your phone, don't snooze. The physical act of standing breaks the sleep inertia loop instantly. If you stay horizontal, your brain interprets it as permission to drift back.",
+    tag: "mindset"
+  },
+  {
+    title: "Drink 9oz of water",
+    desc: "Your body just spent 7–8 hours without hydration. Drink a full 9oz glass before anything else. This jump-starts your metabolism, flushes out overnight toxins, and kills the brain fog that makes mornings feel rough. Keep the glass on your nightstand so it's right there.",
+    tag: "health"
+  },
+  {
+    title: "Turn on bright light or open window",
+    desc: "Hit the overhead light or throw the curtains open immediately. Bright light tells your brain to stop producing melatonin (the sleep hormone) and start producing cortisol (the alert hormone). This is the single fastest biological shortcut to actually feeling awake. Natural sunlight is best, but any bright light works.",
+    tag: "energy"
+  },
+  {
+    title: "Brush teeth, floss, mouthwash, tongue brush",
+    desc: "Full dental routine, in order: brush for 2 full minutes covering every surface, floss between each tooth (yes, every single one), rinse with mouthwash for 30 seconds, then scrape your tongue from back to front 4–5 times. Overnight bacteria double in your mouth — this clears all of it and sets a clean baseline for the day.",
+    tag: "hygiene"
+  },
+  {
+    title: "Splash cold water on face",
+    desc: "Lean over the sink and rinse your face with cold water. This activates the mammalian dive reflex — a natural response that sharpens your focus and brings you fully into the present moment. Pat dry gently; don't scrub. It takes 15 seconds and the effect is immediately noticeable.",
+    tag: "energy"
+  },
+  {
+    title: "Style hair with a little product",
+    desc: "A small amount of product — work a dime-sized amount between your palms, then run through damp or dry hair from roots to ends. Style into place. Even a subtle effort here makes a visible difference in how put-together you look and how you carry yourself throughout the day. Consistency builds the habit of caring about how you present.",
+    tag: "appearance"
+  },
+  {
+    title: "Apply deodorant",
+    desc: "Apply deodorant to clean underarms — both sides. Do this before putting on your shirt so you don't accidentally stain it. Let it set for 30 seconds before dressing. This is non-negotiable, every single day, no exceptions. It takes 5 seconds.",
+    tag: "hygiene"
+  },
+  {
+    title: "Put on your outfit",
+    desc: "Get dressed in the outfit you laid out the night before. Since you already made this decision last night, there's zero mental energy required — just put it on. Tuck in or adjust as needed, make sure everything sits right. Dressing intentionally sets the tone for how seriously you take the rest of your day.",
+    tag: "appearance"
+  },
+  {
+    title: "Spray cologne",
+    desc: "One or two sprays max — hit your neck, wrist, or the inside of your elbow. Don't overapply; less is always more with fragrance. Spray from about 6 inches away. Scent has a powerful connection to memory and confidence — a consistent signature scent becomes part of how people remember you.",
+    tag: "appearance"
+  },
+  {
+    title: "Put on Apple Watch, wipe it clean",
+    desc: "Clip or slide on your Apple Watch if you weren't sleeping in it. Take a second to wipe the face and band with a clean cloth or the corner of your shirt — removes overnight oils and keeps it looking sharp. Check the time and make note of how much time you have before you need to leave.",
+    tag: "gear"
+  },
+  {
+    title: "Socks, then shoes",
+    desc: "Socks first — always. Pull them on smoothly so there are no bunches or wrinkles that'll irritate you all day. Then lace up your shoes properly; sloppy laces are a detail that reads as unpolished. Double knot if needed. Your feet will thank you after a full day of school.",
+    tag: "gear"
+  },
+  {
+    title: "Ensure everything is packed",
+    desc: "Quick scan: phone, charger if needed, laptop or Chromebook, all homework and assignments turned in or ready to turn in, any sport or club gear, keys, headphones, water bottle, lunch or lunch money. Don't leave this to memory alone — physically look at or touch each item. Forgetting something wastes time and throws off your whole morning momentum.",
+    tag: "prep"
+  },
+  {
+    title: "POSTURE CHECK",
+    desc: "Stand straight — feet hip-width apart, shoulders back and down, chin level, chest slightly open. Take one slow breath. This is your final calibration before you walk out. Research shows that posture directly affects how others perceive you AND how you feel about yourself. Walk out like you belong wherever you're going.",
+    tag: "mindset",
+    special: true
+  }
+];
+
+const eveningSteps = [
+  {
+    title: "Set your alarm for tomorrow",
+    desc: "Set it now while you still have energy. Double-check the AM/PM and the time. Consider setting a second alarm 5 minutes after as a backup. Knowing it's set removes a layer of sleep anxiety.",
+    tag: "prep"
+  },
+  {
+    title: "Dump your bag, repack it clean",
+    desc: "Empty your backpack completely. Remove old papers, trash, or anything that doesn't belong. Then repack in a logical order: heaviest things first, most-needed things on top or in the front pocket. You should know exactly where everything is without digging.",
+    tag: "prep"
+  },
+  {
+    title: "Check tomorrow's schedule",
+    desc: "Look at your classes, any tests or quizzes, extracurriculars, or anything else happening. If there's a test, flip through your notes once. If there's a special event, set a reminder. One minute of preview tonight saves five minutes of scrambling tomorrow.",
+    tag: "planning"
+  },
+  {
+    title: "Lay out tomorrow's outfit",
+    desc: "Pick and physically lay out your complete outfit — top, bottoms, socks, shoes, any extras. Drape it over a chair or the end of your bed. This removes all decision-making from tomorrow morning, which is when your brain is at its weakest. Use the outfit planner below to track what you've picked.",
+    tag: "appearance"
+  },
+  {
+    title: "Quick room tidy",
+    desc: "Spend 3–4 minutes straightening your space. Clear your desk surface, hang up any clothes, pick up anything off the floor. You don't need perfection — just enough order that you wake up to a clean environment. Waking up to clutter raises cortisol before you've even fully opened your eyes.",
+    tag: "environment"
+  },
+  {
+    title: "Personal hygiene wrap-up",
+    desc: "Wash your face, brush and floss your teeth, apply any skincare if you have a routine. This signals to your brain that the day is ending and it's time to wind down. Consistency in an evening hygiene routine also just keeps your skin clearer — especially useful at 13.",
+    tag: "hygiene"
+  },
+  {
+    title: "Phone down — charge it away from bed",
+    desc: "Plug in your phone and place it across the room or outside your door. Not on your nightstand. Out of arms reach. This removes the temptation to scroll, reduces blue light exposure, and means your alarm will actually get you out of bed in the morning when you have to walk to it.",
+    tag: "sleep"
+  },
+  {
+    title: "Lights out — actual sleep time",
+    desc: "Get horizontal with the lights off and aim for at least 8–9 hours. At 13, your brain and body are literally growing and rebuilding during sleep — this isn't optional. Consistent sleep time is more important than total hours. If your mind is racing, breathe in for 4 counts, hold 4, out for 6. Repeat until you drift.",
+    tag: "sleep"
+  }
+];
+
+const quotes = [
+  "Discipline is choosing between what you want now and what you want most.",
+  "The way you do small things is the way you do everything.",
+  "Win the morning, win the day.",
+  "Success is the sum of small efforts, repeated day in and day out.",
+  "You don't rise to the level of your goals. You fall to the level of your systems.",
+  "Every master was once a beginner who refused to quit.",
+  "Do something today that your future self will thank you for.",
+  "Confidence is built one kept promise to yourself at a time.",
+  "The secret of getting ahead is getting started.",
+  "First, earn the basics. Then, earn everything else."
+];
+
+// ─── STATE ───────────────────────────────────────────────────────
+
+let mDone = new Array(morningSteps.length).fill(false);
+let eDone = new Array(eveningSteps.length).fill(false);
+let streakData = JSON.parse(localStorage.getItem('streakData') || '{"streak":0,"best":0,"total":0,"lastDate":"","history":[]}');
+let outfitPicked = {};
+
+// ─── INIT ────────────────────────────────────────────────────────
+
+function init() {
+  updateClock();
+  setInterval(updateClock, 1000);
+  updateHeroDate();
+  renderSteps('morningSteps', morningSteps, mDone, updateMorningProgress);
+  renderSteps('eveningSteps', eveningSteps, eDone, updateEveningProgress);
+  renderStreakDots();
+  document.getElementById('streakNum').textContent = streakData.streak;
+  document.getElementById('totalDays').textContent = streakData.total;
+  document.getElementById('bestStreak').textContent = streakData.best;
+
+  // random quote
+  const q = quotes[Math.floor(Math.random() * quotes.length)];
+  document.getElementById('dailyQuote').textContent = '"' + q + '"';
+
+  // Load saved outfit notes
+  const savedNotes = localStorage.getItem('outfitNotes') || '';
+  document.getElementById('outfitNotes').value = savedNotes;
+  document.getElementById('outfitNotes').addEventListener('input', function() {
+    localStorage.setItem('outfitNotes', this.value);
+  });
+
+  // Init quest history
+  renderQuestHistory();
+}
+
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2, '0');
+  const m = String(now.getMinutes()).padStart(2, '0');
+  const s = String(now.getSeconds()).padStart(2, '0');
+  document.getElementById('liveTime').textContent = `${h}:${m}:${s}`;
+}
+
+function updateHeroDate() {
+  const now = new Date();
+  const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+  const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  document.getElementById('heroDate').textContent = days[now.getDay()];
+  document.getElementById('heroSub').textContent = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+}
+
+// ─── RENDER STEPS ────────────────────────────────────────────────
+
+function renderSteps(containerId, steps, doneArr, progressFn) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  steps.forEach((s, i) => {
+    const el = document.createElement('div');
+    el.className = 'step' + (doneArr[i] ? ' done' : '') + (s.special ? ' special' : '');
+    el.dataset.index = i;
+    el.innerHTML = `
+      <div class="step-inner">
+        <div class="step-num">0${i < 9 ? i+1 : i+1}</div>
+        <div class="step-check">
+          <svg class="check-icon" viewBox="0 0 12 12" fill="none">
+            <polyline points="2,6 5,9 10,3" stroke="#0a0a0a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="step-body">
+          <div class="step-title">${s.title}</div>
+          <div class="step-desc${doneArr[i] ? '' : ''}">${s.desc}</div>
+          <span class="step-tag">${s.tag}</span>
+        </div>
+      </div>
+    `;
+    el.addEventListener('click', function(e) {
+      const idx = parseInt(this.dataset.index);
+      const desc = this.querySelector('.step-desc');
+      // toggle description visibility on tap
+      if (!desc.classList.contains('visible')) {
+        desc.classList.add('visible');
+      } else {
+        // second tap marks done
+        doneArr[idx] = !doneArr[idx];
+        this.classList.toggle('done', doneArr[idx]);
+        progressFn();
+        desc.classList.remove('visible');
+      }
+    });
+    container.appendChild(el);
+  });
+  progressFn();
+}
+
+// ─── PROGRESS ────────────────────────────────────────────────────
+
+function updateMorningProgress() {
+  const done = mDone.filter(Boolean).length;
+  const total = morningSteps.length;
+  document.getElementById('mCount').textContent = `${done} / ${total}`;
+  document.getElementById('mFill').style.width = `${(done/total)*100}%`;
+  document.getElementById('completeBanner').classList.toggle('show', done === total);
+}
+
+function updateEveningProgress() {
+  const done = eDone.filter(Boolean).length;
+  const total = eveningSteps.length;
+  document.getElementById('eCount').textContent = `${done} / ${total}`;
+  document.getElementById('eFill').style.width = `${(done/total)*100}%`;
+}
+
+// ─── RESET ────────────────────────────────────────────────────────
+
+function resetMorning() {
+  mDone.fill(false);
+  renderSteps('morningSteps', morningSteps, mDone, updateMorningProgress);
+}
+
+function resetEvening() {
+  eDone.fill(false);
+  renderSteps('eveningSteps', eveningSteps, eDone, updateEveningProgress);
+}
+
+// ─── TABS ─────────────────────────────────────────────────────────
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    const names = ['morning', 'evening', 'streak', 'quests'];
+    t.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+}
+
+// ─── SIDE QUESTS ──────────────────────────────────────────────────
+
+// Using Anthropic API (no CORS issues)
+let selectedCategory = 'random';
+let questHistory = JSON.parse(localStorage.getItem('questHistory') || '[]');
+let totalXP = parseInt(localStorage.getItem('totalXP') || '0');
+let currentQuests = [];
+
+function selectCat(btn, cat) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedCategory = cat;
+}
+
+async function generateQuests() {
+  const btn = document.getElementById('genBtn');
+  const btnText = document.getElementById('genBtnText');
+  const spinner = document.getElementById('genSpinner');
+
+  btn.disabled = true;
+  btnText.textContent = 'Generating...';
+  spinner.classList.add('show');
+
+  const categoryPrompts = {
+    random: 'completely random, wildly varied — could be anything at all, from any category',
+    social: 'social or people-related (talking to someone new, doing something kind, a challenge involving other people)',
+    physical: 'physical or movement-based (exercise, outdoor activity, something active)',
+    creative: 'creative or artistic (drawing, writing, making something, a creative challenge)',
+    brain: 'mental or intellectual (learning something, a puzzle, trivia, a thinking challenge)'
+  };
+
+  const catDesc = categoryPrompts[selectedCategory] || categoryPrompts.random;
+  const prompt = `You are a side quest generator for a 13-year-old 7th grader. Generate exactly 3 side quests that are ${catDesc}. The quests should be fun, safe, genuinely doable in one day, and feel like real mini-challenges — not boring. Be creative, specific, and a little unexpected. Avoid anything dangerous.
+
+For each quest return this exact JSON array (no markdown, no extra text, just raw JSON):
+[
+  {
+    "title": "Short punchy quest title (max 8 words)",
+    "desc": "2-3 sentence description of exactly what to do. Be specific and vivid. Make it sound fun.",
+    "tag": "one word category label",
+    "xp": number between 50-200,
+    "difficulty": number 1-3
+  }
+]`;
+
+  try {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer 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'
+      },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 1.2,
+        max_tokens: 800
+      })
+    });
+
+    if (!res.ok) {
+      const errBody = await res.text();
+      throw new Error(`HTTP ${res.status}: ${errBody}`);
+    }
+
+    const data = await res.json();
+    let raw = data.choices?.[0]?.message?.content || '[]';
+    raw = raw.replace(/```json|```/g, '').trim();
+    const quests = JSON.parse(raw);
+    currentQuests = quests.map(q => ({ ...q, completed: false, id: Date.now() + Math.random() }));
+    renderQuests();
+
+  } catch (err) {
+    console.error('Quest error:', err);
+    showQuestError(err.message);
+  }
+
+  btn.disabled = false;
+  btnText.textContent = 'Generate New Quests';
+  spinner.classList.remove('show');
+}
+
+function showQuestError(msg) {
+  document.getElementById('questsContainer').innerHTML = `
+    <div style="margin: 24px 0; border: 1px solid #2a2a2a; border-radius: 8px; padding: 20px;">
+      <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:#555; text-transform:uppercase; margin-bottom:10px;">Error</div>
+      <div style="font-family:'DM Mono',monospace; font-size:11px; color:#999; line-height:1.7; word-break:break-all;">${msg}</div>
+      <div style="font-family:'DM Sans',sans-serif; font-size:12px; color:#555; margin-top:12px; line-height:1.6;">This usually means CORS is blocking the request because you're running the file locally. Host it on a site (Netlify, Vercel, GitHub Pages) and it'll work.</div>
+    </div>`;
+}
+
+
+function renderQuests() {
+  const container = document.getElementById('questsContainer');
+  if (!currentQuests.length) {
+    container.innerHTML = '<div class="quests-empty"><div class="quests-empty-icon">⚡</div><div class="quests-empty-text">No quests generated yet.</div></div>';
+    return;
+  }
+  container.innerHTML = currentQuests.map((q, i) => `
+    <div class="quest-card${q.completed ? ' completed' : ''}" onclick="toggleQuest(${i})" data-qi="${i}">
+      <div class="quest-header">
+        <div class="quest-title">${q.title}</div>
+        <div class="quest-complete-ring">
+          <svg class="quest-check-svg" width="11" height="11" viewBox="0 0 12 12" fill="none">
+            <polyline points="2,6 5,9 10,3" stroke="#0a0a0a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
+      <div class="quest-desc">${q.desc}</div>
+      <div class="quest-footer">
+        <span class="quest-tag">${q.tag}</span>
+        <span class="quest-xp">+${q.xp} XP</span>
+        <div class="quest-difficulty">
+          ${[1,2,3].map(d => `<div class="diff-dot${d <= q.difficulty ? ' filled' : ''}"></div>`).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleQuest(i) {
+  const q = currentQuests[i];
+  const wasCompleted = q.completed;
+  q.completed = !q.completed;
+
+  if (q.completed && !wasCompleted) {
+    totalXP += q.xp;
+    questHistory.unshift({ title: q.title, xp: q.xp, date: new Date().toLocaleDateString() });
+    if (questHistory.length > 20) questHistory = questHistory.slice(0, 20);
+    localStorage.setItem('questHistory', JSON.stringify(questHistory));
+    localStorage.setItem('totalXP', totalXP);
+    renderQuestHistory();
+  } else if (!q.completed && wasCompleted) {
+    totalXP = Math.max(0, totalXP - q.xp);
+    localStorage.setItem('totalXP', totalXP);
+  }
+
+  renderQuests();
+  renderQuestHistory();
+}
+
+function renderQuestHistory() {
+  const section = document.getElementById('questsHistory');
+  const list = document.getElementById('historyList');
+
+  if (!questHistory.length) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+  list.innerHTML = questHistory.slice(0, 8).map(h => `
+    <div class="history-item">
+      <div class="history-title">${h.title}</div>
+      <div class="history-xp">+${h.xp} XP</div>
+    </div>
+  `).join('');
+
+  // XP total row
+  if (!document.getElementById('xpTotalRow')) {
+    const row = document.createElement('div');
+    row.className = 'xp-total-row';
+    row.id = 'xpTotalRow';
+    row.innerHTML = `<div class="xp-total-label">Total XP</div><div class="xp-total-val" id="xpTotalVal">${totalXP}</div>`;
+    section.appendChild(row);
+  } else {
+    document.getElementById('xpTotalVal').textContent = totalXP;
+  }
+}
+
+
+
+// ─── OUTFIT ────────────────────────────────────────────────────────
+
+function toggleOutfit(el) {
+  el.classList.toggle('picked');
+}
+
+// ─── STREAK ────────────────────────────────────────────────────────
+
+function markStreakDay() {
+  const today = new Date().toDateString();
+  if (streakData.lastDate === today) {
+    alert("Already marked today! Come back tomorrow.");
+    return;
+  }
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (streakData.lastDate === yesterday) {
+    streakData.streak++;
+  } else {
+    streakData.streak = 1;
+  }
+  streakData.lastDate = today;
+  streakData.total++;
+  if (streakData.streak > streakData.best) streakData.best = streakData.streak;
+  if (!streakData.history) streakData.history = [];
+  streakData.history.push(today);
+  if (streakData.history.length > 30) streakData.history = streakData.history.slice(-30);
+  localStorage.setItem('streakData', JSON.stringify(streakData));
+  document.getElementById('streakNum').textContent = streakData.streak;
+  document.getElementById('totalDays').textContent = streakData.total;
+  document.getElementById('bestStreak').textContent = streakData.best;
+  renderStreakDots();
+}
+
+function renderStreakDots() {
+  const container = document.getElementById('streakDots');
+  container.innerHTML = '';
+  const history = streakData.history || [];
+  const todayStr = new Date().toDateString();
+  for (let i = 0; i < 14; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    const dateStr = new Date(Date.now() - (13 - i) * 86400000).toDateString();
+    if (history.includes(dateStr)) dot.classList.add('filled');
+    container.appendChild(dot);
+  }
+}
+
+// ─── GO ──────────────────────────────────────────────────────────
+
+init();
+</script>
+</body>
+</html>

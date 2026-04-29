@@ -15,12 +15,12 @@
     --gray-4: #999;
     --gray-5: #ccc;
     --accent: #f5f5f0;
+    --gold: #d4a843;
+    --gold-dim: #7a5e1e;
   }
-
+ 
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
   html { font-size: 16px; }
-
   body {
     background: var(--black);
     color: var(--white);
@@ -28,8 +28,7 @@
     min-height: 100vh;
     overflow-x: hidden;
   }
-
-  /* ─── GRAIN OVERLAY ─── */
+ 
   body::before {
     content: '';
     position: fixed;
@@ -39,7 +38,7 @@
     z-index: 1000;
     opacity: 0.6;
   }
-
+ 
   /* ─── TOP BAR ─── */
   .topbar {
     display: flex;
@@ -52,53 +51,15 @@
     background: var(--black);
     z-index: 100;
   }
-
-  .topbar-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 4px;
-    color: var(--white);
-  }
-
-  .live-time {
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    color: var(--gray-4);
-    letter-spacing: 1px;
-  }
-
+  .topbar-title { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 4px; color: var(--white); }
+  .live-time { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--gray-4); letter-spacing: 1px; }
+ 
   /* ─── HERO ─── */
-  .hero {
-    padding: 36px 24px 28px;
-    border-bottom: 1px solid var(--gray-2);
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .hero-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--gray-4);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-
-  .hero-date {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px;
-    line-height: 1;
-    letter-spacing: 2px;
-    color: var(--white);
-  }
-
-  .hero-sub {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--gray-4);
-    letter-spacing: 2px;
-    margin-top: 10px;
-  }
-
+  .hero { padding: 36px 24px 28px; border-bottom: 1px solid var(--gray-2); animation: fadeUp 0.6s ease both; }
+  .hero-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--gray-4); text-transform: uppercase; margin-bottom: 8px; }
+  .hero-date { font-family: 'Bebas Neue', sans-serif; font-size: 52px; line-height: 1; letter-spacing: 2px; color: var(--white); }
+  .hero-sub { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gray-4); letter-spacing: 2px; margin-top: 10px; }
+ 
   /* ─── TABS ─── */
   .tabs {
     display: flex;
@@ -107,78 +68,60 @@
     top: 57px;
     background: var(--black);
     z-index: 99;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-
+  .tabs::-webkit-scrollbar { display: none; }
   .tab {
     flex: 1;
+    min-width: 70px;
     padding: 16px 0;
     text-align: center;
     font-family: 'DM Mono', monospace;
     font-size: 10px;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--gray-4);
     cursor: pointer;
     border-bottom: 2px solid transparent;
     transition: all 0.2s ease;
     user-select: none;
+    white-space: nowrap;
   }
-
-  .tab.active {
-    color: var(--white);
-    border-bottom-color: var(--white);
-  }
-
-  /* ─── CONTENT PANELS ─── */
+  .tab.active { color: var(--white); border-bottom-color: var(--white); }
+ 
+  /* ─── PANELS ─── */
   .panel { display: none; }
   .panel.active { display: block; }
-
-  /* ─── PROGRESS BAR ─── */
-  .progress-section {
-    padding: 20px 24px 0;
-  }
-
-  .progress-row {
+ 
+  /* ─── PROGRESS ─── */
+  .progress-section { padding: 20px 24px 0; }
+  .progress-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .progress-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gray-4); text-transform: uppercase; }
+  .progress-count { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gray-4); }
+  .progress-track { height: 2px; background: var(--gray-2); border-radius: 1px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--white); border-radius: 1px; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); width: 0%; }
+ 
+  /* ─── STEPS ─── */
+  .steps { padding: 8px 0 32px; }
+ 
+  /* ─── TIME BLOCK HEADER ─── */
+  .time-block-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    gap: 12px;
+    padding: 18px 24px 8px;
   }
-
-  .progress-label {
+  .time-block-label {
     font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--gray-4);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--gray-3);
     text-transform: uppercase;
+    white-space: nowrap;
   }
-
-  .progress-count {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--gray-4);
-  }
-
-  .progress-track {
-    height: 2px;
-    background: var(--gray-2);
-    border-radius: 1px;
-    overflow: hidden;
-  }
-
-  .progress-fill {
-    height: 100%;
-    background: var(--white);
-    border-radius: 1px;
-    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 0%;
-  }
-
-  /* ─── STEP LIST ─── */
-  .steps {
-    padding: 16px 0 32px;
-  }
-
+  .time-block-line { flex: 1; height: 1px; background: var(--gray-2); }
+ 
   .step {
     display: flex;
     align-items: flex-start;
@@ -188,120 +131,46 @@
     cursor: pointer;
     animation: fadeUp 0.4s ease both;
   }
-
-  .step:nth-child(1)  { animation-delay: 0.05s; }
-  .step:nth-child(2)  { animation-delay: 0.08s; }
-  .step:nth-child(3)  { animation-delay: 0.11s; }
-  .step:nth-child(4)  { animation-delay: 0.14s; }
-  .step:nth-child(5)  { animation-delay: 0.17s; }
-  .step:nth-child(6)  { animation-delay: 0.20s; }
-  .step:nth-child(7)  { animation-delay: 0.23s; }
-  .step:nth-child(8)  { animation-delay: 0.26s; }
-  .step:nth-child(9)  { animation-delay: 0.29s; }
-  .step:nth-child(10) { animation-delay: 0.32s; }
-  .step:nth-child(11) { animation-delay: 0.35s; }
-  .step:nth-child(12) { animation-delay: 0.38s; }
-  .step:nth-child(13) { animation-delay: 0.41s; }
-
   .step-inner {
     display: flex;
     align-items: flex-start;
-    gap: 16px;
+    gap: 14px;
     width: 100%;
-    padding: 16px 18px;
+    padding: 14px 16px;
     border-radius: 8px;
     transition: background 0.15s ease;
     border: 1px solid transparent;
   }
-
-  .step:active .step-inner {
-    background: var(--gray-1);
-  }
-
-  .step.done .step-inner {
-    border-color: var(--gray-2);
-    background: var(--gray-1);
-  }
-
-  .step-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--gray-3);
-    min-width: 18px;
-    margin-top: 2px;
-    letter-spacing: 1px;
-    transition: color 0.2s;
-  }
-
-  .step.done .step-num { color: var(--gray-2); }
-
+  .step:active .step-inner { background: var(--gray-1); }
+  .step.done .step-inner { border-color: var(--gray-2); background: var(--gray-1); }
+ 
+  .step-time-col { display: flex; flex-direction: column; align-items: flex-end; min-width: 38px; margin-top: 2px; gap: 2px; }
+  .step-time { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-3); letter-spacing: 0.5px; white-space: nowrap; }
+  .step-num { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--gray-3); letter-spacing: 1px; }
+ 
   .step-check {
-    width: 20px;
-    height: 20px;
+    width: 20px; height: 20px;
     border: 1.5px solid var(--gray-3);
     border-radius: 50%;
     min-width: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
     margin-top: 1px;
   }
-
-  .step.done .step-check {
-    background: var(--white);
-    border-color: var(--white);
-  }
-
-  .check-icon {
-    width: 10px;
-    height: 10px;
-    opacity: 0;
-    transform: scale(0.5);
-    transition: all 0.2s ease 0.05s;
-  }
-
-  .step.done .check-icon {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .step-body { flex: 1; }
-
+  .step.done .step-check { background: var(--white); border-color: var(--white); }
+  .check-icon { width: 10px; height: 10px; opacity: 0; transform: scale(0.5); transition: all 0.2s ease 0.05s; }
+  .step.done .check-icon { opacity: 1; transform: scale(1); }
+ 
+  .step-body { flex: 1; min-width: 0; }
   .step-title {
     font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--white);
     line-height: 1.3;
-    transition: color 0.2s, text-decoration 0.2s;
+    transition: color 0.2s;
   }
-
-  .step.done .step-title {
-    color: var(--gray-3);
-    text-decoration: line-through;
-    text-decoration-color: var(--gray-3);
-  }
-
-  .step-desc {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12.5px;
-    font-weight: 300;
-    color: var(--gray-4);
-    line-height: 1.6;
-    margin-top: 4px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.3s ease;
-    opacity: 0;
-  }
-
-  .step-desc.visible {
-    max-height: 200px;
-    opacity: 1;
-    margin-top: 6px;
-  }
-
+  .step.done .step-title { color: var(--gray-3); text-decoration: line-through; text-decoration-color: var(--gray-3); }
   .step-tag {
     display: inline-block;
     font-family: 'DM Mono', monospace;
@@ -310,27 +179,310 @@
     text-transform: uppercase;
     color: var(--gray-3);
     background: var(--gray-2);
-    padding: 3px 7px;
+    padding: 2px 6px;
     border-radius: 2px;
-    margin-top: 6px;
+    margin-top: 5px;
   }
-
-  /* ─── SPECIAL STEP: POSTURE ─── */
-  .step.special .step-inner {
+  .step.special .step-inner { border: 1px solid var(--gray-2); }
+ 
+  /* ─── ACTION ROW (appears after tap) ─── */
+  .step-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.25s ease, margin-top 0.3s ease;
+  }
+  .step-actions.visible { max-height: 60px; opacity: 1; margin-top: 8px; }
+  .act-btn {
+    padding: 6px 14px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
     border: 1px solid var(--gray-2);
+    background: transparent;
+    color: var(--gray-4);
+    transition: all 0.15s;
   }
-
-  .step.special .step-title {
-    letter-spacing: 1px;
-    font-weight: 500;
+  .act-btn:active { background: var(--gray-2); color: var(--white); }
+  .act-btn.complete-btn { border-color: var(--gray-3); }
+  .act-btn.complete-btn:active { background: var(--white); color: var(--black); border-color: var(--white); }
+ 
+  /* ─── DIALOGUE MODAL ─── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 500;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    backdrop-filter: blur(4px);
   }
-
-  /* ─── RESET BUTTON ─── */
-  .reset-btn {
+  .modal-overlay.show { opacity: 1; pointer-events: all; }
+ 
+  .modal-box {
+    width: 100%;
+    max-width: 500px;
+    background: var(--gray-1);
+    border-top: 1px solid var(--gray-2);
+    border-radius: 20px 20px 0 0;
+    padding: 0 0 32px 0;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+  }
+  .modal-overlay.show .modal-box { transform: translateY(0); }
+ 
+  .modal-handle {
+    width: 36px; height: 4px;
+    background: var(--gray-2);
+    border-radius: 2px;
+    margin: 12px auto 0;
+  }
+ 
+  /* ─── CHARACTER SECTION ─── */
+  .char-section {
+    display: flex;
+    align-items: flex-end;
+    gap: 16px;
+    padding: 20px 24px 0;
+  }
+ 
+  .char-wrap {
+    flex-shrink: 0;
+    position: relative;
+    background: transparent;
+  }
+ 
+  .char-img {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    object-fit: cover;
+    display: block;
+    mix-blend-mode: screen;
+    background: transparent;
+  }
+ 
+  /* Pixel-art placeholder character */
+  .char-placeholder {
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    background: #1e1e2e;
+    border: 1.5px solid var(--gray-2);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    font-size: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+ 
+  .char-bounce {
+    animation: charBounce 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
+ 
+  @keyframes charBounce {
+    0%   { transform: translateY(0); }
+    20%  { transform: translateY(-14px); }
+    40%  { transform: translateY(0px); }
+    55%  { transform: translateY(-7px); }
+    70%  { transform: translateY(0px); }
+    82%  { transform: translateY(-3px); }
+    95%  { transform: translateY(0px); }
+    100% { transform: translateY(0); }
+  }
+ 
+  .char-name-badge {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gray-2);
+    border: 1px solid var(--gray-3);
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1px;
+    color: var(--gray-4);
+    padding: 2px 6px;
+    white-space: nowrap;
+  }
+ 
+  .speech-bubble {
+    flex: 1;
+    background: var(--gray-2);
+    border-radius: 12px 12px 12px 4px;
+    padding: 14px 16px;
+    position: relative;
+    min-height: 60px;
+  }
+  .speech-bubble::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    bottom: 14px;
+    width: 0; height: 0;
+    border-top: 6px solid transparent;
+    border-right: 10px solid var(--gray-2);
+    border-bottom: 6px solid transparent;
+  }
+ 
+  .speech-typing {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--gray-5);
+    line-height: 1.65;
+  }
+ 
+  .typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 13px;
+    background: var(--gray-4);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 0.8s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+ 
+  .modal-content {
+    padding: 20px 24px 0;
+  }
+ 
+  .modal-step-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+ 
+  .modal-step-time {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+ 
+  .modal-close {
+    width: calc(100% - 48px);
+    margin: 20px 24px 0;
+    padding: 14px;
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 500;
+    transition: opacity 0.2s;
+  }
+  .modal-close:active { opacity: 0.8; }
+ 
+  .modal-complete-btn {
+    width: calc(100% - 48px);
+    margin: 10px 24px 0;
+    padding: 14px;
+    background: transparent;
+    color: var(--gray-4);
+    border: 1px solid var(--gray-2);
+    border-radius: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .modal-complete-btn:active { background: var(--gray-2); color: var(--white); }
+  .modal-complete-btn.done-state { color: var(--gray-3); border-color: var(--gray-2); text-decoration: line-through; }
+ 
+  /* ─── ACHIEVEMENTS ─── */
+  .achievements-section { padding: 20px 24px 0; }
+  .ach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .ach-card {
+    border: 1px solid var(--gray-2);
+    border-radius: 8px;
+    padding: 14px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .ach-card.unlocked { border-color: var(--gold-dim); background: rgba(212,168,67,0.06); }
+  .ach-card.locked { opacity: 0.4; filter: grayscale(1); }
+  .ach-icon { font-size: 24px; margin-bottom: 6px; }
+  .ach-name { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+  .ach-desc { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--gray-4); font-weight: 300; line-height: 1.5; }
+  .ach-badge {
+    position: absolute;
+    top: 8px; right: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 7px;
+    letter-spacing: 1px;
+    color: var(--gold);
+    background: rgba(212,168,67,0.15);
+    padding: 2px 5px;
+    border-radius: 2px;
+  }
+  .ach-unlock-flash {
+    animation: achFlash 0.6s ease both;
+  }
+  @keyframes achFlash {
+    0%   { transform: scale(0.92); opacity: 0; }
+    60%  { transform: scale(1.04); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+ 
+  .section-header {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--gray-4);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+ 
+  /* ─── COMPLETE BANNER ─── */
+  .complete-banner {
+    display: none;
+    margin: 16px 24px 4px;
+    padding: 18px;
+    border: 1px solid var(--gray-5);
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeUp 0.4s ease both;
+  }
+  .complete-banner.show { display: block; }
+  .complete-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 3px; color: var(--white); margin-bottom: 4px; }
+  .complete-sub { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gray-4); }
+ 
+  /* ─── QUOTE CARD ─── */
+  .quote-card { margin: 0 24px 24px; padding: 20px; border: 1px solid var(--gray-2); border-radius: 8px; animation: fadeUp 0.5s ease 0.3s both; }
+  .quote-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--gray-3); text-transform: uppercase; margin-bottom: 10px; }
+  .quote-text { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300; color: var(--gray-5); line-height: 1.7; font-style: italic; }
+ 
+  /* ─── RESET BTN ─── */
+  .reset-btn {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
     margin: 0 24px 32px;
     padding: 14px;
     background: transparent;
@@ -343,787 +495,239 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s ease;
+    width: calc(100% - 48px);
   }
-
-  .reset-btn:active {
-    background: var(--gray-1);
-    color: var(--white);
-    border-color: var(--gray-3);
-  }
-
-  /* ─── QUOTE CARD ─── */
-  .quote-card {
-    margin: 0 24px 24px;
-    padding: 20px;
-    border: 1px solid var(--gray-2);
-    border-radius: 8px;
-    animation: fadeUp 0.5s ease 0.3s both;
-  }
-
-  .quote-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: var(--gray-3);
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .quote-text {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    font-weight: 300;
-    color: var(--gray-5);
-    line-height: 1.7;
-    font-style: italic;
-  }
-
-  /* ─── STATS CARD ─── */
-  .stats-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 20px 24px 0;
-    animation: fadeUp 0.5s ease 0.2s both;
-  }
-
-  .stat-card {
-    padding: 16px;
-    border: 1px solid var(--gray-2);
-    border-radius: 8px;
-  }
-
-  .stat-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    color: var(--white);
-    line-height: 1;
-    letter-spacing: 1px;
-  }
-
-  .stat-lbl {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--gray-4);
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
+  .reset-btn:active { background: var(--gray-1); color: var(--white); border-color: var(--gray-3); }
+ 
   /* ─── OUTFIT SECTION ─── */
-  .outfit-section {
-    padding: 20px 24px 32px;
-    animation: fadeUp 0.4s ease 0.1s both;
-  }
-
-  .section-header {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--gray-4);
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .outfit-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .outfit-item {
-    border: 1px solid var(--gray-2);
-    border-radius: 8px;
-    padding: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-  }
-
-  .outfit-item.picked {
-    border-color: var(--white);
-    background: var(--gray-1);
-  }
-
-  .outfit-icon {
-    font-size: 22px;
-    margin-bottom: 6px;
-  }
-
-  .outfit-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--white);
-  }
-
-  .outfit-note {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 11px;
-    color: var(--gray-4);
-    margin-top: 3px;
-    font-weight: 300;
-  }
-
-  .outfit-check {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--gray-3);
-    border-radius: 50%;
-    transition: all 0.2s;
-  }
-
-  .outfit-item.picked .outfit-check {
-    background: var(--white);
-    border-color: var(--white);
-  }
-
-  .outfit-notes-input {
-    width: 100%;
-    background: var(--gray-1);
-    border: 1px solid var(--gray-2);
-    border-radius: 8px;
-    padding: 14px;
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 300;
-    resize: none;
-    outline: none;
-    line-height: 1.6;
-    min-height: 80px;
-    transition: border-color 0.2s;
-  }
-
+  .outfit-section { padding: 20px 24px 32px; animation: fadeUp 0.4s ease 0.1s both; }
+  .outfit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+  .outfit-item { border: 1px solid var(--gray-2); border-radius: 8px; padding: 14px; cursor: pointer; transition: all 0.2s ease; position: relative; }
+  .outfit-item.picked { border-color: var(--white); background: var(--gray-1); }
+  .outfit-icon { font-size: 22px; margin-bottom: 6px; }
+  .outfit-label { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500; color: var(--white); }
+  .outfit-note { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--gray-4); margin-top: 3px; font-weight: 300; }
+  .outfit-check { position: absolute; top: 10px; right: 10px; width: 14px; height: 14px; border: 1px solid var(--gray-3); border-radius: 50%; transition: all 0.2s; }
+  .outfit-item.picked .outfit-check { background: var(--white); border-color: var(--white); }
+  .outfit-notes-input { width: 100%; background: var(--gray-1); border: 1px solid var(--gray-2); border-radius: 8px; padding: 14px; color: var(--white); font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 300; resize: none; outline: none; line-height: 1.6; min-height: 80px; transition: border-color 0.2s; }
   .outfit-notes-input::placeholder { color: var(--gray-3); }
   .outfit-notes-input:focus { border-color: var(--gray-4); }
-
-  /* ─── TIPS SECTION ─── */
-  .tips-section {
-    padding: 0 24px 32px;
-    animation: fadeUp 0.4s ease 0.2s both;
-  }
-
-  .tip-item {
-    display: flex;
-    gap: 14px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--gray-2);
-  }
-
+ 
+  /* ─── TIPS ─── */
+  .tips-section { padding: 0 24px 32px; animation: fadeUp 0.4s ease 0.2s both; }
+  .tip-item { display: flex; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--gray-2); }
   .tip-item:last-child { border-bottom: none; }
-
-  .tip-num {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--gray-3);
-    min-width: 18px;
-    margin-top: 2px;
-  }
-
-  .tip-content {}
-
-  .tip-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--white);
-    margin-bottom: 3px;
-  }
-
-  .tip-desc {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    font-weight: 300;
-    color: var(--gray-4);
-    line-height: 1.6;
-  }
-
-  /* ─── STREAK SECTION ─── */
-  .streak-section {
-    padding: 20px 24px 0;
-    animation: fadeUp 0.4s ease 0.1s both;
-  }
-
-  .streak-card {
-    border: 1px solid var(--gray-2);
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 16px;
-  }
-
-  .streak-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 72px;
-    color: var(--white);
-    line-height: 1;
-    letter-spacing: 2px;
-  }
-
-  .streak-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--gray-4);
-    text-transform: uppercase;
-    margin-top: 4px;
-  }
-
-  .streak-dots {
-    display: flex;
-    gap: 8px;
-    justify-content: center;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
-
-  .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--gray-2);
-    transition: background 0.3s;
-  }
-
+  .tip-num { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gray-3); min-width: 18px; margin-top: 2px; }
+  .tip-title { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--white); margin-bottom: 3px; }
+  .tip-desc { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 300; color: var(--gray-4); line-height: 1.6; }
+ 
+  /* ─── STREAK ─── */
+  .streak-section { padding: 20px 24px 0; animation: fadeUp 0.4s ease 0.1s both; }
+  .streak-card { border: 1px solid var(--gray-2); border-radius: 8px; padding: 20px; text-align: center; margin-bottom: 16px; }
+  .streak-num { font-family: 'Bebas Neue', sans-serif; font-size: 72px; color: var(--white); line-height: 1; letter-spacing: 2px; }
+  .streak-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; color: var(--gray-4); text-transform: uppercase; margin-top: 4px; }
+  .streak-dots { display: flex; gap: 8px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gray-2); transition: background 0.3s; }
   .dot.filled { background: var(--white); }
-
-  .streak-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--white);
-    color: var(--black);
-    border: none;
-    border-radius: 8px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-weight: 500;
-    transition: opacity 0.2s;
-    margin-bottom: 16px;
-  }
-
+  .streak-btn { width: 100%; padding: 14px; background: var(--white); color: var(--black); border: none; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: opacity 0.2s; margin-bottom: 16px; }
   .streak-btn:active { opacity: 0.8; }
-
-  /* ─── COMPLETE BANNER ─── */
-  .complete-banner {
-    display: none;
-    margin: 0 24px 20px;
-    padding: 18px;
-    border: 1px solid var(--gray-5);
-    border-radius: 8px;
-    text-align: center;
-    animation: fadeUp 0.4s ease both;
-  }
-
-  .complete-banner.show { display: block; }
-
-  .complete-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    letter-spacing: 3px;
-    color: var(--white);
-    margin-bottom: 4px;
-  }
-
-  .complete-sub {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--gray-4);
-  }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(12px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
-
-  .blink { animation: pulse 2s ease infinite; }
-
-  /* ─── SIDE QUESTS ─── */
-  .quests-hero {
-    padding: 32px 24px 20px;
-    border-bottom: 1px solid var(--gray-2);
-    animation: fadeUp 0.5s ease both;
-  }
-
-  .quests-hero-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: var(--gray-4);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .quests-hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 48px;
-    line-height: 1;
-    letter-spacing: 3px;
-    color: var(--white);
-  }
-
-  .quests-hero-sub {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--gray-4);
-    letter-spacing: 1px;
-    margin-top: 8px;
-  }
-
-  .quests-controls {
-    padding: 20px 24px 0;
-    animation: fadeUp 0.4s ease 0.1s both;
-  }
-
-  .gen-btn {
-    width: 100%;
-    padding: 16px;
-    background: var(--white);
-    color: var(--black);
-    border: none;
-    border-radius: 8px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-weight: 500;
-    transition: opacity 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 14px;
-    position: relative;
-  }
-
+  .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0; margin-bottom: 16px; }
+  .stat-card { padding: 16px; border: 1px solid var(--gray-2); border-radius: 8px; }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--white); line-height: 1; letter-spacing: 1px; }
+  .stat-lbl { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--gray-4); text-transform: uppercase; margin-top: 4px; }
+ 
+  /* ─── QUESTS ─── */
+  .quests-hero { padding: 32px 24px 20px; border-bottom: 1px solid var(--gray-2); animation: fadeUp 0.5s ease both; }
+  .quests-hero-label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 3px; color: var(--gray-4); text-transform: uppercase; margin-bottom: 6px; }
+  .quests-hero-title { font-family: 'Bebas Neue', sans-serif; font-size: 48px; line-height: 1; letter-spacing: 3px; color: var(--white); }
+  .quests-hero-sub { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--gray-4); letter-spacing: 1px; margin-top: 8px; }
+  .quests-controls { padding: 20px 24px 0; animation: fadeUp 0.4s ease 0.1s both; }
+  .gen-btn { width: 100%; padding: 16px; background: var(--white); color: var(--black); border: none; border-radius: 8px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; font-weight: 500; transition: opacity 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 14px; }
   .gen-btn:active { opacity: 0.8; }
   .gen-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  .gen-spinner {
-    width: 14px;
-    height: 14px;
-    border: 2px solid rgba(0,0,0,0.2);
-    border-top-color: var(--black);
-    border-radius: 50%;
-    display: none;
-    animation: spin 0.7s linear infinite;
-  }
-
+  .gen-spinner { width: 14px; height: 14px; border: 2px solid rgba(0,0,0,0.2); border-top-color: var(--black); border-radius: 50%; display: none; animation: spin 0.7s linear infinite; }
   .gen-spinner.show { display: block; }
-
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  .gen-category-row {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    scrollbar-width: none;
-  }
-
+  .gen-category-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
   .gen-category-row::-webkit-scrollbar { display: none; }
-
-  .cat-btn {
-    flex-shrink: 0;
-    padding: 8px 14px;
-    background: transparent;
-    border: 1px solid var(--gray-2);
-    border-radius: 100px;
-    color: var(--gray-4);
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .cat-btn.active {
-    background: var(--gray-2);
-    border-color: var(--gray-3);
-    color: var(--white);
-  }
-
-  .quests-container {
-    padding: 20px 24px 0;
-    min-height: 200px;
-  }
-
-  .quests-empty {
-    text-align: center;
-    padding: 48px 0;
-  }
-
-  .quests-empty-icon {
-    font-size: 36px;
-    margin-bottom: 12px;
-    opacity: 0.3;
-  }
-
-  .quests-empty-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--gray-3);
-  }
-
-  .quest-card {
-    border: 1px solid var(--gray-2);
-    border-radius: 10px;
-    padding: 18px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    animation: fadeUp 0.35s ease both;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .quest-card:nth-child(1) { animation-delay: 0.0s; }
-  .quest-card:nth-child(2) { animation-delay: 0.07s; }
-  .quest-card:nth-child(3) { animation-delay: 0.14s; }
-
-  .quest-card::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: var(--gray-3);
-    border-radius: 3px 0 0 3px;
-    transition: background 0.2s;
-  }
-
-  .quest-card.completed {
-    background: var(--gray-1);
-    border-color: var(--gray-2);
-  }
-
-  .quest-card.completed::before {
-    background: var(--white);
-  }
-
-  .quest-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 8px;
-  }
-
-  .quest-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--white);
-    line-height: 1.3;
-    flex: 1;
-  }
-
-  .quest-card.completed .quest-title {
-    color: var(--gray-3);
-    text-decoration: line-through;
-    text-decoration-color: var(--gray-3);
-  }
-
-  .quest-complete-ring {
-    width: 22px;
-    height: 22px;
-    border: 1.5px solid var(--gray-3);
-    border-radius: 50%;
-    min-width: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-    margin-top: 1px;
-  }
-
-  .quest-card.completed .quest-complete-ring {
-    background: var(--white);
-    border-color: var(--white);
-  }
-
-  .quest-check-svg {
-    opacity: 0;
-    transform: scale(0.4);
-    transition: all 0.2s ease 0.05s;
-  }
-
-  .quest-card.completed .quest-check-svg {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  .quest-desc {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12.5px;
-    font-weight: 300;
-    color: var(--gray-4);
-    line-height: 1.65;
-    margin-bottom: 10px;
-  }
-
-  .quest-footer {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-
-  .quest-tag {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-3);
-    background: var(--gray-2);
-    padding: 3px 8px;
-    border-radius: 2px;
-  }
-
-  .quest-xp {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    letter-spacing: 1px;
-    color: var(--gray-4);
-  }
-
-  .quest-difficulty {
-    margin-left: auto;
-    display: flex;
-    gap: 3px;
-  }
-
-  .diff-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: var(--gray-2);
-  }
-
+  .cat-btn { flex-shrink: 0; padding: 8px 14px; background: transparent; border: 1px solid var(--gray-2); border-radius: 100px; color: var(--gray-4); font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.2s; }
+  .cat-btn.active { background: var(--gray-2); border-color: var(--gray-3); color: var(--white); }
+  .quests-container { padding: 20px 24px 0; min-height: 200px; }
+  .quests-empty { text-align: center; padding: 48px 0; }
+  .quests-empty-icon { font-size: 36px; margin-bottom: 12px; opacity: 0.3; }
+  .quests-empty-text { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--gray-3); }
+  .quest-card { border: 1px solid var(--gray-2); border-radius: 10px; padding: 18px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s ease; animation: fadeUp 0.35s ease both; position: relative; overflow: hidden; }
+  .quest-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gray-3); border-radius: 3px 0 0 3px; }
+  .quest-card.completed { background: var(--gray-1); border-color: var(--gray-2); }
+  .quest-card.completed::before { background: var(--white); }
+  .quest-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+  .quest-title { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: var(--white); line-height: 1.3; flex: 1; }
+  .quest-card.completed .quest-title { color: var(--gray-3); text-decoration: line-through; text-decoration-color: var(--gray-3); }
+  .quest-complete-ring { width: 22px; height: 22px; border: 1.5px solid var(--gray-3); border-radius: 50%; min-width: 22px; display: flex; align-items: center; justify-content: center; transition: all 0.25s ease; margin-top: 1px; }
+  .quest-card.completed .quest-complete-ring { background: var(--white); border-color: var(--white); }
+  .quest-check-svg { opacity: 0; transform: scale(0.4); transition: all 0.2s ease 0.05s; }
+  .quest-card.completed .quest-check-svg { opacity: 1; transform: scale(1); }
+  .quest-desc { font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 300; color: var(--gray-4); line-height: 1.65; margin-bottom: 10px; }
+  .quest-footer { display: flex; gap: 8px; align-items: center; }
+  .quest-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gray-3); background: var(--gray-2); padding: 3px 8px; border-radius: 2px; }
+  .quest-xp { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--gray-4); }
+  .quest-difficulty { margin-left: auto; display: flex; gap: 3px; }
+  .diff-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gray-2); }
   .diff-dot.filled { background: var(--gray-4); }
-
-  .quests-history-section {
-    padding: 24px 0 0;
-    border-top: 1px solid var(--gray-2);
-    margin-top: 8px;
-  }
-
-  .history-list {
-    padding: 0 24px;
-  }
-
-  .history-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--gray-2);
-  }
-
+  .quests-history-section { padding: 24px 0 0; border-top: 1px solid var(--gray-2); margin-top: 8px; }
+  .history-list { padding: 0 24px; }
+  .history-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--gray-2); }
   .history-item:last-child { border-bottom: none; }
-
-  .history-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 12px;
-    color: var(--gray-4);
-    flex: 1;
-  }
-
-  .history-xp {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    color: var(--gray-3);
-    letter-spacing: 1px;
-  }
-
-  .xp-total-row {
+  .history-title { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--gray-4); flex: 1; }
+  .history-xp { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--gray-3); letter-spacing: 1px; }
+  .xp-total-row { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; border-top: 1px solid var(--gray-2); margin-top: 4px; }
+  .xp-total-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; color: var(--gray-4); text-transform: uppercase; }
+  .xp-total-val { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: var(--white); letter-spacing: 1px; }
+ 
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+ 
+  /* ─── ACHIEVEMENT TOAST ─── */
+  .ach-toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--gray-1);
+    border: 1px solid var(--gold-dim);
+    border-radius: 10px;
+    padding: 14px 20px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 16px 24px;
-    border-top: 1px solid var(--gray-2);
-    margin-top: 4px;
+    gap: 12px;
+    z-index: 600;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+    opacity: 0;
+    white-space: nowrap;
+    pointer-events: none;
   }
-
-  .xp-total-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--gray-4);
-    text-transform: uppercase;
-  }
-
-  .xp-total-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    color: var(--white);
-    letter-spacing: 1px;
-  }
-
-  /* ─── SCROLLBAR ─── */
+  .ach-toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .ach-toast-icon { font-size: 22px; }
+  .ach-toast-text {}
+  .ach-toast-label { font-family: 'DM Mono', monospace; font-size: 8px; letter-spacing: 2px; color: var(--gold); text-transform: uppercase; }
+  .ach-toast-name { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--white); margin-top: 2px; }
+ 
   ::-webkit-scrollbar { width: 0; }
 </style>
 </head>
 <body>
-
+ 
+<!-- DIALOGUE MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal-box" id="modalBox">
+    <div class="modal-handle"></div>
+    <div class="char-section">
+      <div class="char-wrap">
+        <img class="char-img" id="charAvatar" src="data:image/jpeg;base64,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" alt="Internet Helper">
+        <div class="char-name-badge">INTERNET HELPER</div>
+      </div>
+      <div class="speech-bubble">
+        <div class="speech-typing" id="speechText"></div>
+      </div>
+    </div>
+    <div class="modal-content">
+      <div class="modal-step-title" id="modalTitle"></div>
+      <div class="modal-step-time" id="modalTime"></div>
+    </div>
+    <button class="modal-complete-btn" id="modalCompleteBtn" onclick="modalCompleteTask()">Mark Complete</button>
+    <button class="modal-close" onclick="closeModal()">Got it — close</button>
+  </div>
+</div>
+ 
+<!-- ACHIEVEMENT TOAST -->
+<div class="ach-toast" id="achToast">
+  <div class="ach-toast-icon" id="achToastIcon">🏆</div>
+  <div class="ach-toast-text">
+    <div class="ach-toast-label">Achievement Unlocked</div>
+    <div class="ach-toast-name" id="achToastName"></div>
+  </div>
+</div>
+ 
 <!-- TOP BAR -->
 <div class="topbar">
   <div class="topbar-title">DAILY</div>
   <div class="live-time" id="liveTime">--:--</div>
 </div>
-
+ 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-label">Today</div>
   <div class="hero-date" id="heroDate">LOADING</div>
   <div class="hero-sub" id="heroSub">LOADING...</div>
 </div>
-
+ 
 <!-- TABS -->
 <div class="tabs">
   <div class="tab active" onclick="switchTab('morning')">Morning</div>
   <div class="tab" onclick="switchTab('evening')">Evening</div>
   <div class="tab" onclick="switchTab('streak')">Streak</div>
   <div class="tab" onclick="switchTab('quests')">Quests</div>
+  <div class="tab" onclick="switchTab('achievements')">Badges</div>
 </div>
-
-<!-- ════════════════════════════════ -->
+ 
 <!-- MORNING PANEL -->
-<!-- ════════════════════════════════ -->
 <div class="panel active" id="panel-morning">
   <div class="progress-section">
     <div class="progress-row">
       <span class="progress-label">Progress</span>
       <span class="progress-count" id="mCount">0 / 13</span>
     </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="mFill"></div>
-    </div>
+    <div class="progress-track"><div class="progress-fill" id="mFill"></div></div>
   </div>
-
   <div id="completeBanner" class="complete-banner">
     <div class="complete-title">READY.</div>
     <div class="complete-sub">All steps complete — go get it.</div>
   </div>
-
-  <div class="steps" id="morningSteps">
-    <!-- Steps injected by JS -->
-  </div>
-
+  <div class="steps" id="morningSteps"></div>
   <div class="quote-card">
     <div class="quote-label">Remember</div>
     <div class="quote-text" id="dailyQuote">Loading quote...</div>
   </div>
-
-  <button class="reset-btn" onclick="resetMorning()">
-    ↺ &nbsp; Reset Routine
-  </button>
+  <button class="reset-btn" onclick="resetMorning()">↺ &nbsp; Reset Routine</button>
 </div>
-
-<!-- ════════════════════════════════ -->
+ 
 <!-- EVENING PANEL -->
-<!-- ════════════════════════════════ -->
 <div class="panel" id="panel-evening">
   <div class="progress-section">
     <div class="progress-row">
       <span class="progress-label">Progress</span>
       <span class="progress-count" id="eCount">0 / 8</span>
     </div>
-    <div class="progress-track">
-      <div class="progress-fill" id="eFill"></div>
-    </div>
+    <div class="progress-track"><div class="progress-fill" id="eFill"></div></div>
   </div>
-
   <div class="steps" id="eveningSteps"></div>
-
-  <!-- Outfit Planner -->
   <div class="outfit-section">
     <div class="section-header">Tomorrow's Outfit</div>
     <div class="outfit-grid">
-      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="top">
-        <div class="outfit-check"></div>
-        <div class="outfit-icon">👕</div>
-        <div class="outfit-label">Top</div>
-        <div class="outfit-note">shirt / hoodie / tee</div>
-      </div>
-      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="bottoms">
-        <div class="outfit-check"></div>
-        <div class="outfit-icon">👖</div>
-        <div class="outfit-label">Bottoms</div>
-        <div class="outfit-note">pants / shorts / jeans</div>
-      </div>
-      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="shoes">
-        <div class="outfit-check"></div>
-        <div class="outfit-icon">👟</div>
-        <div class="outfit-label">Shoes</div>
-        <div class="outfit-note">sneakers / boots</div>
-      </div>
-      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="accessories">
-        <div class="outfit-check"></div>
-        <div class="outfit-icon">⌚</div>
-        <div class="outfit-label">Extras</div>
-        <div class="outfit-note">watch / belt / socks</div>
-      </div>
+      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="top"><div class="outfit-check"></div><div class="outfit-icon">👕</div><div class="outfit-label">Top</div><div class="outfit-note">shirt / hoodie / tee</div></div>
+      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="bottoms"><div class="outfit-check"></div><div class="outfit-icon">👖</div><div class="outfit-label">Bottoms</div><div class="outfit-note">pants / shorts / jeans</div></div>
+      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="shoes"><div class="outfit-check"></div><div class="outfit-icon">👟</div><div class="outfit-label">Shoes</div><div class="outfit-note">sneakers / boots</div></div>
+      <div class="outfit-item" onclick="toggleOutfit(this)" data-item="accessories"><div class="outfit-check"></div><div class="outfit-icon">⌚</div><div class="outfit-label">Extras</div><div class="outfit-note">watch / belt / socks</div></div>
     </div>
-    <textarea class="outfit-notes-input" placeholder="Any outfit notes for tomorrow? (e.g. 'wear the navy crewneck, white nike dunks')..." rows="3" id="outfitNotes"></textarea>
+    <textarea class="outfit-notes-input" placeholder="Any outfit notes for tomorrow?" rows="3" id="outfitNotes"></textarea>
   </div>
-
-  <!-- Wind-down tips -->
   <div class="tips-section">
     <div class="section-header">Wind-Down Tips</div>
-    <div class="tip-item">
-      <div class="tip-num">01</div>
-      <div class="tip-content">
-        <div class="tip-title">No screens 30 min before sleep</div>
-        <div class="tip-desc">Blue light messes with melatonin. Swap the phone for a book or music. Your morning self will thank you.</div>
-      </div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-num">02</div>
-      <div class="tip-content">
-        <div class="tip-title">Keep your room dark & cool</div>
-        <div class="tip-desc">Ideal sleep temp is around 65–68°F. Cool and dark = deep sleep = easier wake-up.</div>
-      </div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-num">03</div>
-      <div class="tip-content">
-        <div class="tip-title">Same bedtime every night</div>
-        <div class="tip-desc">Your internal clock runs on consistency. Irregular sleep makes mornings brutal — lock in a time and stick to it.</div>
-      </div>
-    </div>
+    <div class="tip-item"><div class="tip-num">01</div><div><div class="tip-title">No screens 30 min before sleep</div><div class="tip-desc">Blue light messes with melatonin. Swap the phone for a book or music.</div></div></div>
+    <div class="tip-item"><div class="tip-num">02</div><div><div class="tip-title">Keep your room dark & cool</div><div class="tip-desc">Ideal sleep temp is around 65–68°F. Cool and dark = deep sleep = easier wake-up.</div></div></div>
+    <div class="tip-item"><div class="tip-num">03</div><div><div class="tip-title">Same bedtime every night</div><div class="tip-desc">Your internal clock runs on consistency. Lock in a time and stick to it.</div></div></div>
   </div>
-
   <button class="reset-btn" onclick="resetEvening()">↺ &nbsp; Reset Evening</button>
 </div>
-
-<!-- ════════════════════════════════ -->
+ 
 <!-- QUESTS PANEL -->
-<!-- ════════════════════════════════ -->
 <div class="panel" id="panel-quests">
   <div class="quests-hero">
     <div class="quests-hero-label">AI-Generated</div>
     <div class="quests-hero-title">SIDE QUESTS</div>
     <div class="quests-hero-sub">Random missions. No reason. Just do it.</div>
   </div>
-
   <div class="quests-controls">
     <button class="gen-btn" id="genBtn" onclick="generateQuests()">
       <span id="genBtnText">Generate Quests</span>
@@ -1137,24 +741,17 @@
       <button class="cat-btn" onclick="selectCat(this,'brain')">Brain</button>
     </div>
   </div>
-
   <div id="questsContainer" class="quests-container">
-    <div class="quests-empty">
-      <div class="quests-empty-icon">⚡</div>
-      <div class="quests-empty-text">Hit generate to get your quests.</div>
-    </div>
+    <div class="quests-empty"><div class="quests-empty-icon">⚡</div><div class="quests-empty-text">Hit generate to get your quests.</div></div>
   </div>
-
   <div id="questsHistory" class="quests-history-section" style="display:none;">
     <div class="section-header" style="padding: 0 24px; margin-bottom: 12px;">Completed Quests</div>
     <div id="historyList" class="history-list"></div>
   </div>
   <div style="height:40px;"></div>
 </div>
-
-<!-- ════════════════════════════════ -->
+ 
 <!-- STREAK PANEL -->
-<!-- ════════════════════════════════ -->
 <div class="panel" id="panel-streak">
   <div class="streak-section">
     <div class="streak-card">
@@ -1162,169 +759,63 @@
       <div class="streak-label">Day Streak</div>
       <div class="streak-dots" id="streakDots"></div>
     </div>
-
     <button class="streak-btn" onclick="markStreakDay()">Mark Today Complete</button>
-
-    <div class="stats-row" style="padding: 0; margin-bottom: 16px;">
-      <div class="stat-card">
-        <div class="stat-val" id="totalDays">0</div>
-        <div class="stat-lbl">Total Days</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-val" id="bestStreak">0</div>
-        <div class="stat-lbl">Best Streak</div>
-      </div>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-val" id="totalDays">0</div><div class="stat-lbl">Total Days</div></div>
+      <div class="stat-card"><div class="stat-val" id="bestStreak">0</div><div class="stat-lbl">Best Streak</div></div>
     </div>
-
-    <!-- Tips -->
     <div class="section-header" style="padding: 0; margin-bottom: 12px;">Why This Routine Works</div>
-    <div class="tip-item">
-      <div class="tip-num">→</div>
-      <div class="tip-content">
-        <div class="tip-title">Cold water on your face</div>
-        <div class="tip-desc">Activates the dive reflex — drops your heart rate slightly and sharpens focus. Natural espresso shot.</div>
-      </div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-num">→</div>
-      <div class="tip-content">
-        <div class="tip-title">Bright light immediately</div>
-        <div class="tip-desc">Stops melatonin production and resets your circadian clock. The single fastest way to actually wake up.</div>
-      </div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-num">→</div>
-      <div class="tip-content">
-        <div class="tip-title">Hydration first</div>
-        <div class="tip-desc">You've been without water for 7–8 hours. That 9oz re-activates your metabolism and kills morning brain fog.</div>
-      </div>
-    </div>
-    <div class="tip-item" style="border-bottom: none;">
-      <div class="tip-num">→</div>
-      <div class="tip-content">
-        <div class="tip-title">Posture check at the door</div>
-        <div class="tip-desc">Studies show body posture affects confidence. Walk out standing tall and your brain actually perceives you as more capable.</div>
-      </div>
-    </div>
+    <div class="tip-item"><div class="tip-num">→</div><div><div class="tip-title">Cold water on your face</div><div class="tip-desc">Activates the dive reflex — drops your heart rate slightly and sharpens focus.</div></div></div>
+    <div class="tip-item"><div class="tip-num">→</div><div><div class="tip-title">Bright light immediately</div><div class="tip-desc">Stops melatonin production and resets your circadian clock.</div></div></div>
+    <div class="tip-item"><div class="tip-num">→</div><div><div class="tip-title">Hydration first</div><div class="tip-desc">You've been without water for 7–8 hours. That 9oz re-activates your metabolism and kills brain fog.</div></div></div>
+    <div class="tip-item" style="border-bottom:none;"><div class="tip-num">→</div><div><div class="tip-title">Posture check at the door</div><div class="tip-desc">Walk out standing tall and your brain actually perceives you as more capable.</div></div></div>
   </div>
-  <div style="height: 32px;"></div>
+  <div style="height:32px;"></div>
 </div>
-
+ 
+<!-- ACHIEVEMENTS PANEL -->
+<div class="panel" id="panel-achievements">
+  <div style="padding: 32px 24px 20px; border-bottom: 1px solid var(--gray-2); animation: fadeUp 0.5s ease both;">
+    <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:var(--gray-4);text-transform:uppercase;margin-bottom:6px;">Progress</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:48px;line-height:1;letter-spacing:3px;color:var(--white);">ACHIEVEMENTS</div>
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--gray-4);letter-spacing:1px;margin-top:8px;" id="achSubtitle">0 / 12 unlocked</div>
+  </div>
+  <div class="achievements-section">
+    <div class="ach-grid" id="achGrid"></div>
+  </div>
+  <div style="height:40px;"></div>
+</div>
+ 
 <script>
 // ─── DATA ────────────────────────────────────────────────────────
-
+ 
 const morningSteps = [
-  {
-    title: "Alarm goes off — stand up immediately",
-    desc: "The moment your alarm sounds, plant your feet on the floor. Don't negotiate with yourself, don't check your phone, don't snooze. The physical act of standing breaks the sleep inertia loop instantly. If you stay horizontal, your brain interprets it as permission to drift back.",
-    tag: "mindset"
-  },
-  {
-    title: "Drink 9oz of water",
-    desc: "Your body just spent 7–8 hours without hydration. Drink a full 9oz glass before anything else. This jump-starts your metabolism, flushes out overnight toxins, and kills the brain fog that makes mornings feel rough. Keep the glass on your nightstand so it's right there.",
-    tag: "health"
-  },
-  {
-    title: "Turn on bright light or open window",
-    desc: "Hit the overhead light or throw the curtains open immediately. Bright light tells your brain to stop producing melatonin (the sleep hormone) and start producing cortisol (the alert hormone). This is the single fastest biological shortcut to actually feeling awake. Natural sunlight is best, but any bright light works.",
-    tag: "energy"
-  },
-  {
-    title: "Brush teeth, floss, mouthwash, tongue brush",
-    desc: "Full dental routine, in order: brush for 2 full minutes covering every surface, floss between each tooth (yes, every single one), rinse with mouthwash for 30 seconds, then scrape your tongue from back to front 4–5 times. Overnight bacteria double in your mouth — this clears all of it and sets a clean baseline for the day.",
-    tag: "hygiene"
-  },
-  {
-    title: "Splash cold water on face",
-    desc: "Lean over the sink and rinse your face with cold water. This activates the mammalian dive reflex — a natural response that sharpens your focus and brings you fully into the present moment. Pat dry gently; don't scrub. It takes 15 seconds and the effect is immediately noticeable.",
-    tag: "energy"
-  },
-  {
-    title: "Style hair with a little product",
-    desc: "A small amount of product — work a dime-sized amount between your palms, then run through damp or dry hair from roots to ends. Style into place. Even a subtle effort here makes a visible difference in how put-together you look and how you carry yourself throughout the day. Consistency builds the habit of caring about how you present.",
-    tag: "appearance"
-  },
-  {
-    title: "Apply deodorant",
-    desc: "Apply deodorant to clean underarms — both sides. Do this before putting on your shirt so you don't accidentally stain it. Let it set for 30 seconds before dressing. This is non-negotiable, every single day, no exceptions. It takes 5 seconds.",
-    tag: "hygiene"
-  },
-  {
-    title: "Put on your outfit",
-    desc: "Get dressed in the outfit you laid out the night before. Since you already made this decision last night, there's zero mental energy required — just put it on. Tuck in or adjust as needed, make sure everything sits right. Dressing intentionally sets the tone for how seriously you take the rest of your day.",
-    tag: "appearance"
-  },
-  {
-    title: "Spray cologne",
-    desc: "One or two sprays max — hit your neck, wrist, or the inside of your elbow. Don't overapply; less is always more with fragrance. Spray from about 6 inches away. Scent has a powerful connection to memory and confidence — a consistent signature scent becomes part of how people remember you.",
-    tag: "appearance"
-  },
-  {
-    title: "Put on Apple Watch, wipe it clean",
-    desc: "Clip or slide on your Apple Watch if you weren't sleeping in it. Take a second to wipe the face and band with a clean cloth or the corner of your shirt — removes overnight oils and keeps it looking sharp. Check the time and make note of how much time you have before you need to leave.",
-    tag: "gear"
-  },
-  {
-    title: "Socks, then shoes",
-    desc: "Socks first — always. Pull them on smoothly so there are no bunches or wrinkles that'll irritate you all day. Then lace up your shoes properly; sloppy laces are a detail that reads as unpolished. Double knot if needed. Your feet will thank you after a full day of school.",
-    tag: "gear"
-  },
-  {
-    title: "Ensure everything is packed",
-    desc: "Quick scan: phone, charger if needed, laptop or Chromebook, all homework and assignments turned in or ready to turn in, any sport or club gear, keys, headphones, water bottle, lunch or lunch money. Don't leave this to memory alone — physically look at or touch each item. Forgetting something wastes time and throws off your whole morning momentum.",
-    tag: "prep"
-  },
-  {
-    title: "POSTURE CHECK",
-    desc: "Stand straight — feet hip-width apart, shoulders back and down, chin level, chest slightly open. Take one slow breath. This is your final calibration before you walk out. Research shows that posture directly affects how others perceive you AND how you feel about yourself. Walk out like you belong wherever you're going.",
-    tag: "mindset",
-    special: true
-  }
+  { title: "Alarm goes off — stand up immediately", time: "5:30 AM", desc: "The moment your alarm sounds, plant your feet on the floor. Don't negotiate with yourself, don't check your phone, don't snooze. The physical act of standing breaks the sleep inertia loop instantly. If you stay horizontal, your brain interprets it as permission to drift back.", tag: "mindset" },
+  { title: "Drink 9oz of water", time: "5:31 AM", desc: "Your body just spent 7–8 hours without hydration. Drink a full 9oz glass before anything else. This jump-starts your metabolism, flushes out overnight toxins, and kills the brain fog that makes mornings feel rough. Keep the glass on your nightstand so it's right there.", tag: "health" },
+  { title: "Turn on bright light or open window", time: "5:32 AM", desc: "Hit the overhead light or throw the curtains open immediately. Bright light tells your brain to stop producing melatonin and start producing cortisol (the alert hormone). This is the single fastest biological shortcut to actually feeling awake. Natural sunlight is best, but any bright light works.", tag: "energy" },
+  { title: "Brush teeth, floss, mouthwash, tongue brush", time: "5:33 AM", desc: "Full dental routine, in order: brush for 2 full minutes covering every surface, floss between each tooth (yes, every single one), rinse with mouthwash for 30 seconds, then scrape your tongue from back to front 4–5 times. Overnight bacteria double in your mouth — this clears all of it.", tag: "hygiene" },
+  { title: "Splash cold water on face", time: "5:38 AM", desc: "Lean over the sink and rinse your face with cold water. This activates the mammalian dive reflex — a natural response that sharpens your focus and brings you fully into the present moment. Pat dry gently; don't scrub. It takes 15 seconds and the effect is immediately noticeable.", tag: "energy" },
+  { title: "Style hair with a little product", time: "5:40 AM", desc: "A small amount of product — work a dime-sized amount between your palms, then run through damp or dry hair from roots to ends. Style into place. Even a subtle effort here makes a visible difference in how put-together you look and how you carry yourself throughout the day.", tag: "appearance" },
+  { title: "Apply deodorant", time: "5:44 AM", desc: "Apply deodorant to clean underarms — both sides. Do this before putting on your shirt so you don't accidentally stain it. Let it set for 30 seconds before dressing. This is non-negotiable, every single day, no exceptions. It takes 5 seconds.", tag: "hygiene" },
+  { title: "Put on your outfit", time: "5:45 AM", desc: "Get dressed in the outfit you laid out the night before. Since you already made this decision last night, there's zero mental energy required — just put it on. Tuck in or adjust as needed, make sure everything sits right. Dressing intentionally sets the tone for the day.", tag: "appearance" },
+  { title: "Spray cologne", time: "5:48 AM", desc: "One or two sprays max — hit your neck, wrist, or the inside of your elbow. Don't overapply; less is always more with fragrance. Spray from about 6 inches away. Scent has a powerful connection to memory and confidence — a consistent signature scent becomes part of how people remember you.", tag: "appearance" },
+  { title: "Put on Apple Watch, wipe it clean", time: "5:50 AM", desc: "Clip or slide on your Apple Watch. Take a second to wipe the face and band with a clean cloth — removes overnight oils and keeps it looking sharp. Check the time and make note of how much time you have before you need to leave.", tag: "gear" },
+  { title: "Socks, then shoes", time: "5:52 AM", desc: "Socks first — always. Pull them on smoothly so there are no bunches or wrinkles that'll irritate you all day. Then lace up your shoes properly; sloppy laces are a detail that reads as unpolished. Double knot if needed.", tag: "gear" },
+  { title: "Ensure everything is packed", time: "5:54 AM", desc: "Quick scan: phone, charger if needed, laptop or Chromebook, all homework and assignments, any sport or club gear, keys, headphones, water bottle, lunch or lunch money. Don't leave this to memory alone — physically look at or touch each item.", tag: "prep" },
+  { title: "POSTURE CHECK", time: "6:20 AM", desc: "Stand straight — feet hip-width apart, shoulders back and down, chin level, chest slightly open. Take one slow breath. This is your final calibration before you walk out. Research shows that posture directly affects how others perceive you AND how you feel about yourself. Walk out like you belong wherever you're going.", tag: "mindset", special: true }
 ];
-
+ 
 const eveningSteps = [
-  {
-    title: "Set your alarm for tomorrow",
-    desc: "Set it now while you still have energy. Double-check the AM/PM and the time. Consider setting a second alarm 5 minutes after as a backup. Knowing it's set removes a layer of sleep anxiety.",
-    tag: "prep"
-  },
-  {
-    title: "Dump your bag, repack it clean",
-    desc: "Empty your backpack completely. Remove old papers, trash, or anything that doesn't belong. Then repack in a logical order: heaviest things first, most-needed things on top or in the front pocket. You should know exactly where everything is without digging.",
-    tag: "prep"
-  },
-  {
-    title: "Check tomorrow's schedule",
-    desc: "Look at your classes, any tests or quizzes, extracurriculars, or anything else happening. If there's a test, flip through your notes once. If there's a special event, set a reminder. One minute of preview tonight saves five minutes of scrambling tomorrow.",
-    tag: "planning"
-  },
-  {
-    title: "Lay out tomorrow's outfit",
-    desc: "Pick and physically lay out your complete outfit — top, bottoms, socks, shoes, any extras. Drape it over a chair or the end of your bed. This removes all decision-making from tomorrow morning, which is when your brain is at its weakest. Use the outfit planner below to track what you've picked.",
-    tag: "appearance"
-  },
-  {
-    title: "Quick room tidy",
-    desc: "Spend 3–4 minutes straightening your space. Clear your desk surface, hang up any clothes, pick up anything off the floor. You don't need perfection — just enough order that you wake up to a clean environment. Waking up to clutter raises cortisol before you've even fully opened your eyes.",
-    tag: "environment"
-  },
-  {
-    title: "Personal hygiene wrap-up",
-    desc: "Wash your face, brush and floss your teeth, apply any skincare if you have a routine. This signals to your brain that the day is ending and it's time to wind down. Consistency in an evening hygiene routine also just keeps your skin clearer — especially useful at 13.",
-    tag: "hygiene"
-  },
-  {
-    title: "Phone down — charge it away from bed",
-    desc: "Plug in your phone and place it across the room or outside your door. Not on your nightstand. Out of arms reach. This removes the temptation to scroll, reduces blue light exposure, and means your alarm will actually get you out of bed in the morning when you have to walk to it.",
-    tag: "sleep"
-  },
-  {
-    title: "Lights out — actual sleep time",
-    desc: "Get horizontal with the lights off and aim for at least 8–9 hours. At 13, your brain and body are literally growing and rebuilding during sleep — this isn't optional. Consistent sleep time is more important than total hours. If your mind is racing, breathe in for 4 counts, hold 4, out for 6. Repeat until you drift.",
-    tag: "sleep"
-  }
+  { title: "Set your alarm for tomorrow", time: "3:00 PM", desc: "Set it now while you still have energy. Double-check the AM/PM and the time. Consider setting a second alarm 5 minutes after as a backup. Knowing it's set removes a layer of sleep anxiety.", tag: "prep" },
+  { title: "Dump your bag, repack it clean", time: "3:05 PM", desc: "Empty your backpack completely. Remove old papers, trash, or anything that doesn't belong. Then repack in a logical order: heaviest things first, most-needed things on top or in the front pocket. You should know exactly where everything is without digging.", tag: "prep" },
+  { title: "Check tomorrow's schedule", time: "3:15 PM", desc: "Look at your classes, any tests or quizzes, extracurriculars, or anything else happening. If there's a test, flip through your notes once. If there's a special event, set a reminder. One minute of preview tonight saves five minutes of scrambling tomorrow.", tag: "planning" },
+  { title: "Lay out tomorrow's outfit", time: "3:25 PM", desc: "Pick and physically lay out your complete outfit — top, bottoms, socks, shoes, any extras. Drape it over a chair or the end of your bed. This removes all decision-making from tomorrow morning, which is when your brain is at its weakest.", tag: "appearance" },
+  { title: "Quick room tidy", time: "7:00 PM", desc: "Spend 3–4 minutes straightening your space. Clear your desk surface, hang up any clothes, pick up anything off the floor. You don't need perfection — just enough order that you wake up to a clean environment. Waking up to clutter raises cortisol before you've even opened your eyes.", tag: "environment" },
+  { title: "Personal hygiene wrap-up", time: "8:00 PM", desc: "Wash your face, brush and floss your teeth, apply any skincare if you have a routine. This signals to your brain that the day is ending and it's time to wind down. Consistency in an evening hygiene routine also just keeps your skin clearer.", tag: "hygiene" },
+  { title: "Phone down — charge it away from bed", time: "8:30 PM", desc: "Plug in your phone and place it across the room or outside your door. Not on your nightstand. Out of arms reach. This removes the temptation to scroll, reduces blue light exposure, and means your alarm will actually get you out of bed in the morning when you have to walk to it.", tag: "sleep" },
+  { title: "Lights out — actual sleep time", time: "9:00 PM", desc: "Get horizontal with the lights off and aim for at least 8–9 hours. At 13, your brain and body are literally growing and rebuilding during sleep — this isn't optional. Consistent sleep time is more important than total hours. If your mind is racing, breathe in for 4 counts, hold 4, out for 6.", tag: "sleep" }
 ];
-
+ 
 const quotes = [
   "Discipline is choosing between what you want now and what you want most.",
   "The way you do small things is the way you do everything.",
@@ -1337,16 +828,51 @@ const quotes = [
   "The secret of getting ahead is getting started.",
   "First, earn the basics. Then, earn everything else."
 ];
-
+ 
+// Helper phrases for Internet Helper dialogue intros
+const helperIntros = [
+  "Alright, listen up! Here's the deal with this one:",
+  "Oh, this step's important. Let me break it down:",
+  "Good question! Here's why this matters:",
+  "Pay attention — this one makes a real difference:",
+  "Okay, real talk. This step is worth doing right:",
+  "Here's the lowdown on this one:",
+  "Don't skip this! Here's why it works:",
+  "This is a key one. Here's what you need to know:"
+];
+ 
+// ─── ACHIEVEMENTS ────────────────────────────────────────────────
+ 
+const achievementDefs = [
+  { id: 'first_step',    icon: '👣', name: 'First Step',       desc: 'Complete your first morning task.',         check: (s) => s.morningDone >= 1 },
+  { id: 'half_morning',  icon: '🌤️', name: 'Halfway There',    desc: 'Complete 7 morning steps in one session.',   check: (s) => s.morningDone >= 7 },
+  { id: 'full_morning',  icon: '🌅', name: 'Morning Champion', desc: 'Complete the entire morning routine.',       check: (s) => s.morningDone >= 13 },
+  { id: 'full_evening',  icon: '🌙', name: 'Night Shift',      desc: 'Complete the entire evening routine.',       check: (s) => s.eveningDone >= 8 },
+  { id: 'streak_3',      icon: '🔥', name: 'On Fire',          desc: 'Hit a 3-day streak.',                        check: (s) => s.streak >= 3 },
+  { id: 'streak_7',      icon: '⚡', name: 'Week Warrior',     desc: 'Hit a 7-day streak.',                        check: (s) => s.streak >= 7 },
+  { id: 'streak_30',     icon: '💎', name: 'Diamond Habit',    desc: 'Hit a 30-day streak.',                       check: (s) => s.streak >= 30 },
+  { id: 'quest_first',   icon: '⚔️', name: 'Quest Starter',    desc: 'Complete your first side quest.',            check: (s) => s.questsDone >= 1 },
+  { id: 'quest_five',    icon: '🗡️', name: 'Quest Grinder',    desc: 'Complete 5 side quests total.',              check: (s) => s.questsDone >= 5 },
+  { id: 'xp_500',        icon: '🎖️', name: 'XP Collector',     desc: 'Earn 500 total XP from quests.',             check: (s) => s.xp >= 500 },
+  { id: 'both_routines', icon: '👑', name: 'Full Day King',    desc: 'Complete both morning AND evening routines in one day.', check: (s) => s.morningDone >= 13 && s.eveningDone >= 8 },
+  { id: 'posture',       icon: '🦁', name: 'Stand Tall',       desc: 'Complete the posture check step.',           check: (s) => s.postureChecked },
+];
+ 
 // ─── STATE ───────────────────────────────────────────────────────
-
+ 
 let mDone = new Array(morningSteps.length).fill(false);
 let eDone = new Array(eveningSteps.length).fill(false);
 let streakData = JSON.parse(localStorage.getItem('streakData') || '{"streak":0,"best":0,"total":0,"lastDate":"","history":[]}');
-let outfitPicked = {};
-
+let unlockedAchs = JSON.parse(localStorage.getItem('unlockedAchs') || '[]');
+let questHistory = JSON.parse(localStorage.getItem('questHistory') || '[]');
+let totalXP = parseInt(localStorage.getItem('totalXP') || '0');
+let currentQuests = [];
+let selectedCategory = 'random';
+let activeOpenStep = null; // track which step has actions visible
+let modalStepRef = null; // { steps, doneArr, idx, progressFn }
+ 
 // ─── INIT ────────────────────────────────────────────────────────
-
+ 
 function init() {
   updateClock();
   setInterval(updateClock, 1000);
@@ -1357,30 +883,23 @@ function init() {
   document.getElementById('streakNum').textContent = streakData.streak;
   document.getElementById('totalDays').textContent = streakData.total;
   document.getElementById('bestStreak').textContent = streakData.best;
-
-  // random quote
   const q = quotes[Math.floor(Math.random() * quotes.length)];
   document.getElementById('dailyQuote').textContent = '"' + q + '"';
-
-  // Load saved outfit notes
   const savedNotes = localStorage.getItem('outfitNotes') || '';
   document.getElementById('outfitNotes').value = savedNotes;
-  document.getElementById('outfitNotes').addEventListener('input', function() {
-    localStorage.setItem('outfitNotes', this.value);
-  });
-
-  // Init quest history
+  document.getElementById('outfitNotes').addEventListener('input', function() { localStorage.setItem('outfitNotes', this.value); });
   renderQuestHistory();
+  renderAchievements();
 }
-
+ 
 function updateClock() {
   const now = new Date();
-  const h = String(now.getHours()).padStart(2, '0');
-  const m = String(now.getMinutes()).padStart(2, '0');
-  const s = String(now.getSeconds()).padStart(2, '0');
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
   document.getElementById('liveTime').textContent = `${h}:${m}:${s}`;
 }
-
+ 
 function updateHeroDate() {
   const now = new Date();
   const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
@@ -1388,19 +907,49 @@ function updateHeroDate() {
   document.getElementById('heroDate').textContent = days[now.getDay()];
   document.getElementById('heroSub').textContent = `${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
 }
-
+ 
 // ─── RENDER STEPS ────────────────────────────────────────────────
-
+ 
 function renderSteps(containerId, steps, doneArr, progressFn) {
   const container = document.getElementById(containerId);
   container.innerHTML = '';
+ 
+  // Group steps by time block for morning (just add headers at certain points)
+  const morningBlocks = [
+    { before: 0, label: '5:30 AM — Wake Up' },
+    { before: 3, label: '5:33 AM — Hygiene' },
+    { before: 5, label: '5:40 AM — Get Ready' },
+    { before: 11, label: '5:54 AM — Final Prep' },
+    { before: 12, label: '6:20 AM — Walk Out' },
+  ];
+  const eveningBlocks = [
+    { before: 0, label: '3:00 PM — Arrive Home' },
+    { before: 4, label: '7:00 PM — Wind Down' },
+    { before: 5, label: '8:00 PM — Hygiene' },
+    { before: 7, label: '9:00 PM — Sleep' },
+  ];
+  const isMorning = containerId === 'morningSteps';
+  const blocks = isMorning ? morningBlocks : eveningBlocks;
+ 
   steps.forEach((s, i) => {
+    // Insert time block header if applicable
+    const block = blocks.find(b => b.before === i);
+    if (block) {
+      const header = document.createElement('div');
+      header.className = 'time-block-header';
+      header.innerHTML = `<div class="time-block-label">${block.label}</div><div class="time-block-line"></div>`;
+      container.appendChild(header);
+    }
+ 
     const el = document.createElement('div');
     el.className = 'step' + (doneArr[i] ? ' done' : '') + (s.special ? ' special' : '');
     el.dataset.index = i;
     el.innerHTML = `
       <div class="step-inner">
-        <div class="step-num">0${i < 9 ? i+1 : i+1}</div>
+        <div class="step-time-col">
+          <div class="step-time">${s.time}</div>
+          <div class="step-num">${String(i+1).padStart(2,'0')}</div>
+        </div>
         <div class="step-check">
           <svg class="check-icon" viewBox="0 0 12 12" fill="none">
             <polyline points="2,6 5,9 10,3" stroke="#0a0a0a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1408,32 +957,142 @@ function renderSteps(containerId, steps, doneArr, progressFn) {
         </div>
         <div class="step-body">
           <div class="step-title">${s.title}</div>
-          <div class="step-desc${doneArr[i] ? '' : ''}">${s.desc}</div>
           <span class="step-tag">${s.tag}</span>
+          <div class="step-actions" id="actions-${containerId}-${i}">
+            <button class="act-btn complete-btn" onclick="quickComplete(event,'${containerId}',${i})">✓ Complete</button>
+            <button class="act-btn" onclick="openDetails(event,'${containerId}',${i})">Details</button>
+          </div>
         </div>
       </div>
     `;
     el.addEventListener('click', function(e) {
+      // Don't toggle if clicking a button
+      if (e.target.tagName === 'BUTTON') return;
       const idx = parseInt(this.dataset.index);
-      const desc = this.querySelector('.step-desc');
-      // toggle description visibility on tap
-      if (!desc.classList.contains('visible')) {
-        desc.classList.add('visible');
-      } else {
-        // second tap marks done
-        doneArr[idx] = !doneArr[idx];
-        this.classList.toggle('done', doneArr[idx]);
-        progressFn();
-        desc.classList.remove('visible');
+      const actionsEl = document.getElementById(`actions-${containerId}-${idx}`);
+      // Close previously open step if different
+      if (activeOpenStep && activeOpenStep !== actionsEl) {
+        activeOpenStep.classList.remove('visible');
       }
+      actionsEl.classList.toggle('visible');
+      activeOpenStep = actionsEl.classList.contains('visible') ? actionsEl : null;
     });
     container.appendChild(el);
   });
   progressFn();
 }
-
+ 
+function quickComplete(e, containerId, idx) {
+  e.stopPropagation();
+  const isMorning = containerId === 'morningSteps';
+  const doneArr = isMorning ? mDone : eDone;
+  const progressFn = isMorning ? updateMorningProgress : updateEveningProgress;
+  const steps = isMorning ? morningSteps : eveningSteps;
+  doneArr[idx] = !doneArr[idx];
+  const el = document.querySelector(`#${containerId} .step[data-index="${idx}"]`);
+  if (el) el.classList.toggle('done', doneArr[idx]);
+  const actionsEl = document.getElementById(`actions-${containerId}-${idx}`);
+  if (actionsEl) actionsEl.classList.remove('visible');
+  activeOpenStep = null;
+  progressFn();
+  checkAchievements();
+}
+ 
+function openDetails(e, containerId, idx) {
+  e.stopPropagation();
+  const isMorning = containerId === 'morningSteps';
+  const steps = isMorning ? morningSteps : eveningSteps;
+  const doneArr = isMorning ? mDone : eDone;
+  const progressFn = isMorning ? updateMorningProgress : updateEveningProgress;
+  const step = steps[idx];
+  modalStepRef = { containerId, idx, doneArr, progressFn };
+  openModal(step, doneArr[idx]);
+}
+ 
+// ─── MODAL ────────────────────────────────────────────────────────
+ 
+function openModal(step, isDone) {
+  document.getElementById('modalTitle').textContent = step.title;
+  document.getElementById('modalTime').textContent = '⏰ ' + step.time;
+ 
+  const completeBtn = document.getElementById('modalCompleteBtn');
+  if (isDone) {
+    completeBtn.textContent = '✓ Marked Complete';
+    completeBtn.classList.add('done-state');
+  } else {
+    completeBtn.textContent = 'Mark Complete';
+    completeBtn.classList.remove('done-state');
+  }
+ 
+  document.getElementById('modalOverlay').classList.add('show');
+ 
+  // Bounce the character
+  const avatar = document.getElementById('charAvatar');
+  avatar.classList.remove('char-bounce');
+  void avatar.offsetWidth; // force reflow
+  avatar.classList.add('char-bounce');
+ 
+  // Type out speech
+  const intro = helperIntros[Math.floor(Math.random() * helperIntros.length)];
+  const fullText = intro + ' ' + step.desc;
+  typeText('speechText', fullText, 18);
+}
+ 
+function typeText(elId, text, speed) {
+  const el = document.getElementById(elId);
+  el.innerHTML = '';
+  let i = 0;
+  // Add cursor
+  const cursor = document.createElement('span');
+  cursor.className = 'typing-cursor';
+  el.appendChild(cursor);
+ 
+  const interval = setInterval(() => {
+    if (i < text.length) {
+      el.insertBefore(document.createTextNode(text[i]), cursor);
+      i++;
+    } else {
+      clearInterval(interval);
+      cursor.remove();
+    }
+  }, speed);
+}
+ 
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+  modalStepRef = null;
+}
+ 
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+ 
+function modalCompleteTask() {
+  if (!modalStepRef) return;
+  const { containerId, idx, doneArr, progressFn } = modalStepRef;
+  doneArr[idx] = !doneArr[idx];
+  const el = document.querySelector(`#${containerId} .step[data-index="${idx}"]`);
+  if (el) el.classList.toggle('done', doneArr[idx]);
+  const completeBtn = document.getElementById('modalCompleteBtn');
+  if (doneArr[idx]) {
+    completeBtn.textContent = '✓ Marked Complete';
+    completeBtn.classList.add('done-state');
+  } else {
+    completeBtn.textContent = 'Mark Complete';
+    completeBtn.classList.remove('done-state');
+  }
+  progressFn();
+  checkAchievements();
+ 
+  // Brief bounce to celebrate
+  const avatar = document.getElementById('charAvatar');
+  avatar.classList.remove('char-bounce');
+  void avatar.offsetWidth;
+  avatar.classList.add('char-bounce');
+}
+ 
 // ─── PROGRESS ────────────────────────────────────────────────────
-
+ 
 function updateMorningProgress() {
   const done = mDone.filter(Boolean).length;
   const total = morningSteps.length;
@@ -1441,137 +1100,179 @@ function updateMorningProgress() {
   document.getElementById('mFill').style.width = `${(done/total)*100}%`;
   document.getElementById('completeBanner').classList.toggle('show', done === total);
 }
-
+ 
 function updateEveningProgress() {
   const done = eDone.filter(Boolean).length;
   const total = eveningSteps.length;
   document.getElementById('eCount').textContent = `${done} / ${total}`;
   document.getElementById('eFill').style.width = `${(done/total)*100}%`;
 }
-
+ 
 // ─── RESET ────────────────────────────────────────────────────────
-
+ 
 function resetMorning() {
   mDone.fill(false);
   renderSteps('morningSteps', morningSteps, mDone, updateMorningProgress);
 }
-
+ 
 function resetEvening() {
   eDone.fill(false);
   renderSteps('eveningSteps', eveningSteps, eDone, updateEveningProgress);
 }
-
+ 
 // ─── TABS ─────────────────────────────────────────────────────────
-
+ 
 function switchTab(name) {
-  document.querySelectorAll('.tab').forEach((t, i) => {
-    const names = ['morning', 'evening', 'streak', 'quests'];
-    t.classList.toggle('active', names[i] === name);
-  });
+  const names = ['morning','evening','streak','quests','achievements'];
+  document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', names[i] === name));
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-' + name).classList.add('active');
 }
-
+ 
+// ─── ACHIEVEMENTS ─────────────────────────────────────────────────
+ 
+function getAchievementState() {
+  return {
+    morningDone: mDone.filter(Boolean).length,
+    eveningDone: eDone.filter(Boolean).length,
+    streak: streakData.streak,
+    questsDone: questHistory.length,
+    xp: totalXP,
+    postureChecked: mDone[12] // posture is last morning step
+  };
+}
+ 
+function checkAchievements() {
+  const state = getAchievementState();
+  achievementDefs.forEach(def => {
+    if (!unlockedAchs.includes(def.id) && def.check(state)) {
+      unlockedAchs.push(def.id);
+      localStorage.setItem('unlockedAchs', JSON.stringify(unlockedAchs));
+      showAchievementToast(def);
+    }
+  });
+  renderAchievements();
+}
+ 
+function showAchievementToast(def) {
+  const toast = document.getElementById('achToast');
+  document.getElementById('achToastIcon').textContent = def.icon;
+  document.getElementById('achToastName').textContent = def.name;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+ 
+function renderAchievements() {
+  const grid = document.getElementById('achGrid');
+  const unlocked = unlockedAchs.length;
+  const total = achievementDefs.length;
+  document.getElementById('achSubtitle').textContent = `${unlocked} / ${total} unlocked`;
+ 
+  grid.innerHTML = achievementDefs.map(def => {
+    const isUnlocked = unlockedAchs.includes(def.id);
+    return `
+      <div class="ach-card ${isUnlocked ? 'unlocked' : 'locked'}">
+        ${isUnlocked ? `<div class="ach-badge">UNLOCKED</div>` : ''}
+        <div class="ach-icon">${def.icon}</div>
+        <div class="ach-name">${def.name}</div>
+        <div class="ach-desc">${def.desc}</div>
+      </div>
+    `;
+  }).join('');
+}
+ 
+// ─── STREAK ────────────────────────────────────────────────────────
+ 
+function markStreakDay() {
+  const today = new Date().toDateString();
+  if (streakData.lastDate === today) { alert("Already marked today! Come back tomorrow."); return; }
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (streakData.lastDate === yesterday) { streakData.streak++; } else { streakData.streak = 1; }
+  streakData.lastDate = today;
+  streakData.total++;
+  if (streakData.streak > streakData.best) streakData.best = streakData.streak;
+  if (!streakData.history) streakData.history = [];
+  streakData.history.push(today);
+  if (streakData.history.length > 30) streakData.history = streakData.history.slice(-30);
+  localStorage.setItem('streakData', JSON.stringify(streakData));
+  document.getElementById('streakNum').textContent = streakData.streak;
+  document.getElementById('totalDays').textContent = streakData.total;
+  document.getElementById('bestStreak').textContent = streakData.best;
+  renderStreakDots();
+  checkAchievements();
+}
+ 
+function renderStreakDots() {
+  const container = document.getElementById('streakDots');
+  container.innerHTML = '';
+  const history = streakData.history || [];
+  for (let i = 0; i < 14; i++) {
+    const dot = document.createElement('div');
+    dot.className = 'dot';
+    const dateStr = new Date(Date.now() - (13 - i) * 86400000).toDateString();
+    if (history.includes(dateStr)) dot.classList.add('filled');
+    container.appendChild(dot);
+  }
+}
+ 
+// ─── OUTFIT ────────────────────────────────────────────────────────
+ 
+function toggleOutfit(el) { el.classList.toggle('picked'); }
+ 
 // ─── SIDE QUESTS ──────────────────────────────────────────────────
-
-// Using Anthropic API (no CORS issues)
-let selectedCategory = 'random';
-let questHistory = JSON.parse(localStorage.getItem('questHistory') || '[]');
-let totalXP = parseInt(localStorage.getItem('totalXP') || '0');
-let currentQuests = [];
-
+ 
 function selectCat(btn, cat) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   selectedCategory = cat;
 }
-
+ 
 async function generateQuests() {
   const btn = document.getElementById('genBtn');
   const btnText = document.getElementById('genBtnText');
   const spinner = document.getElementById('genSpinner');
-
   btn.disabled = true;
   btnText.textContent = 'Generating...';
   spinner.classList.add('show');
-
+ 
   const categoryPrompts = {
-    random: 'completely random, wildly varied — could be anything at all, from any category',
-    social: 'social or people-related (talking to someone new, doing something kind, a challenge involving other people)',
+    random: 'completely random, wildly varied — could be anything at all',
+    social: 'social or people-related (talking to someone new, doing something kind)',
     physical: 'physical or movement-based (exercise, outdoor activity, something active)',
-    creative: 'creative or artistic (drawing, writing, making something, a creative challenge)',
-    brain: 'mental or intellectual (learning something, a puzzle, trivia, a thinking challenge)'
+    creative: 'creative or artistic (drawing, writing, making something)',
+    brain: 'mental or intellectual (learning something, a puzzle, trivia)'
   };
-
   const catDesc = categoryPrompts[selectedCategory] || categoryPrompts.random;
-  const prompt = `You are a side quest generator for a 13-year-old 7th grader. Generate exactly 3 side quests that are ${catDesc}. The quests should be fun, safe, genuinely doable in one day, and feel like real mini-challenges — not boring. Be creative, specific, and a little unexpected. Avoid anything dangerous.
-
-For each quest return this exact JSON array (no markdown, no extra text, just raw JSON):
-[
-  {
-    "title": "Short punchy quest title (max 8 words)",
-    "desc": "2-3 sentence description of exactly what to do. Be specific and vivid. Make it sound fun.",
-    "tag": "one word category label",
-    "xp": number between 50-200,
-    "difficulty": number 1-3
-  }
-]`;
-
+  const prompt = `You are a side quest generator for a 13-year-old 7th grader. Generate exactly 3 side quests that are ${catDesc}. The quests should be fun, safe, genuinely doable in one day, and feel like real mini-challenges — not boring. Be creative, specific, and a little unexpected. Avoid anything dangerous.\n\nFor each quest return this exact JSON array (no markdown, no extra text, just raw JSON):\n[\n  {\n    "title": "Short punchy quest title (max 8 words)",\n    "desc": "2-3 sentence description of exactly what to do. Be specific and vivid. Make it sound fun.",\n    "tag": "one word category label",\n    "xp": number between 50-200,\n    "difficulty": number 1-3\n  }\n]`;
+ 
   try {
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer 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'
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 1.2,
-        max_tokens: 800
-      })
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer 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' },
+      body: JSON.stringify({ model: 'llama-3.3-70b-versatile', messages: [{ role: 'user', content: prompt }], temperature: 1.2, max_tokens: 800 })
     });
-
-    if (!res.ok) {
-      const errBody = await res.text();
-      throw new Error(`HTTP ${res.status}: ${errBody}`);
-    }
-
+    if (!res.ok) { const errBody = await res.text(); throw new Error(`HTTP ${res.status}: ${errBody}`); }
     const data = await res.json();
     let raw = data.choices?.[0]?.message?.content || '[]';
     raw = raw.replace(/```json|```/g, '').trim();
     const quests = JSON.parse(raw);
     currentQuests = quests.map(q => ({ ...q, completed: false, id: Date.now() + Math.random() }));
     renderQuests();
-
   } catch (err) {
     console.error('Quest error:', err);
-    showQuestError(err.message);
+    document.getElementById('questsContainer').innerHTML = `<div style="margin:24px 0;border:1px solid #2a2a2a;border-radius:8px;padding:20px;"><div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:#555;text-transform:uppercase;margin-bottom:10px;">Error</div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#999;line-height:1.7;">${err.message}</div></div>`;
   }
-
+ 
   btn.disabled = false;
   btnText.textContent = 'Generate New Quests';
   spinner.classList.remove('show');
 }
-
-function showQuestError(msg) {
-  document.getElementById('questsContainer').innerHTML = `
-    <div style="margin: 24px 0; border: 1px solid #2a2a2a; border-radius: 8px; padding: 20px;">
-      <div style="font-family:'DM Mono',monospace; font-size:10px; letter-spacing:3px; color:#555; text-transform:uppercase; margin-bottom:10px;">Error</div>
-      <div style="font-family:'DM Mono',monospace; font-size:11px; color:#999; line-height:1.7; word-break:break-all;">${msg}</div>
-      <div style="font-family:'DM Sans',sans-serif; font-size:12px; color:#555; margin-top:12px; line-height:1.6;">This usually means CORS is blocking the request because you're running the file locally. Host it on a site (Netlify, Vercel, GitHub Pages) and it'll work.</div>
-    </div>`;
-}
-
-
+ 
 function renderQuests() {
   const container = document.getElementById('questsContainer');
-  if (!currentQuests.length) {
-    container.innerHTML = '<div class="quests-empty"><div class="quests-empty-icon">⚡</div><div class="quests-empty-text">No quests generated yet.</div></div>';
-    return;
-  }
+  if (!currentQuests.length) { container.innerHTML = '<div class="quests-empty"><div class="quests-empty-icon">⚡</div><div class="quests-empty-text">No quests generated yet.</div></div>'; return; }
   container.innerHTML = currentQuests.map((q, i) => `
-    <div class="quest-card${q.completed ? ' completed' : ''}" onclick="toggleQuest(${i})" data-qi="${i}">
+    <div class="quest-card${q.completed ? ' completed' : ''}" onclick="toggleQuest(${i})">
       <div class="quest-header">
         <div class="quest-title">${q.title}</div>
         <div class="quest-complete-ring">
@@ -1584,115 +1285,47 @@ function renderQuests() {
       <div class="quest-footer">
         <span class="quest-tag">${q.tag}</span>
         <span class="quest-xp">+${q.xp} XP</span>
-        <div class="quest-difficulty">
-          ${[1,2,3].map(d => `<div class="diff-dot${d <= q.difficulty ? ' filled' : ''}"></div>`).join('')}
-        </div>
+        <div class="quest-difficulty">${[1,2,3].map(d => `<div class="diff-dot${d <= q.difficulty ? ' filled' : ''}"></div>`).join('')}</div>
       </div>
     </div>
   `).join('');
 }
-
+ 
 function toggleQuest(i) {
   const q = currentQuests[i];
   const wasCompleted = q.completed;
   q.completed = !q.completed;
-
   if (q.completed && !wasCompleted) {
     totalXP += q.xp;
     questHistory.unshift({ title: q.title, xp: q.xp, date: new Date().toLocaleDateString() });
     if (questHistory.length > 20) questHistory = questHistory.slice(0, 20);
     localStorage.setItem('questHistory', JSON.stringify(questHistory));
     localStorage.setItem('totalXP', totalXP);
-    renderQuestHistory();
   } else if (!q.completed && wasCompleted) {
     totalXP = Math.max(0, totalXP - q.xp);
     localStorage.setItem('totalXP', totalXP);
   }
-
   renderQuests();
   renderQuestHistory();
+  checkAchievements();
 }
-
+ 
 function renderQuestHistory() {
   const section = document.getElementById('questsHistory');
   const list = document.getElementById('historyList');
-
-  if (!questHistory.length) {
-    section.style.display = 'none';
-    return;
-  }
-
+  if (!questHistory.length) { section.style.display = 'none'; return; }
   section.style.display = 'block';
-  list.innerHTML = questHistory.slice(0, 8).map(h => `
-    <div class="history-item">
-      <div class="history-title">${h.title}</div>
-      <div class="history-xp">+${h.xp} XP</div>
-    </div>
-  `).join('');
-
-  // XP total row
+  list.innerHTML = questHistory.slice(0, 8).map(h => `<div class="history-item"><div class="history-title">${h.title}</div><div class="history-xp">+${h.xp} XP</div></div>`).join('');
   if (!document.getElementById('xpTotalRow')) {
     const row = document.createElement('div');
-    row.className = 'xp-total-row';
-    row.id = 'xpTotalRow';
+    row.className = 'xp-total-row'; row.id = 'xpTotalRow';
     row.innerHTML = `<div class="xp-total-label">Total XP</div><div class="xp-total-val" id="xpTotalVal">${totalXP}</div>`;
     section.appendChild(row);
   } else {
     document.getElementById('xpTotalVal').textContent = totalXP;
   }
 }
-
-
-
-// ─── OUTFIT ────────────────────────────────────────────────────────
-
-function toggleOutfit(el) {
-  el.classList.toggle('picked');
-}
-
-// ─── STREAK ────────────────────────────────────────────────────────
-
-function markStreakDay() {
-  const today = new Date().toDateString();
-  if (streakData.lastDate === today) {
-    alert("Already marked today! Come back tomorrow.");
-    return;
-  }
-  const yesterday = new Date(Date.now() - 86400000).toDateString();
-  if (streakData.lastDate === yesterday) {
-    streakData.streak++;
-  } else {
-    streakData.streak = 1;
-  }
-  streakData.lastDate = today;
-  streakData.total++;
-  if (streakData.streak > streakData.best) streakData.best = streakData.streak;
-  if (!streakData.history) streakData.history = [];
-  streakData.history.push(today);
-  if (streakData.history.length > 30) streakData.history = streakData.history.slice(-30);
-  localStorage.setItem('streakData', JSON.stringify(streakData));
-  document.getElementById('streakNum').textContent = streakData.streak;
-  document.getElementById('totalDays').textContent = streakData.total;
-  document.getElementById('bestStreak').textContent = streakData.best;
-  renderStreakDots();
-}
-
-function renderStreakDots() {
-  const container = document.getElementById('streakDots');
-  container.innerHTML = '';
-  const history = streakData.history || [];
-  const todayStr = new Date().toDateString();
-  for (let i = 0; i < 14; i++) {
-    const dot = document.createElement('div');
-    dot.className = 'dot';
-    const dateStr = new Date(Date.now() - (13 - i) * 86400000).toDateString();
-    if (history.includes(dateStr)) dot.classList.add('filled');
-    container.appendChild(dot);
-  }
-}
-
-// ─── GO ──────────────────────────────────────────────────────────
-
+ 
 init();
 </script>
 </body>

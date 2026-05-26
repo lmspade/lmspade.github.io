@@ -18,7 +18,7 @@
         html, body {
             width: 100%;
             height: 100%;
-            background: #000;
+            background: linear-gradient(135deg, #000 0%, #0a0a0a 100%);
             color: #fff;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             overflow: hidden;
@@ -35,25 +35,54 @@
             justify-content: space-between;
             align-items: center;
             padding: max(12px, env(safe-area-inset-top)) 16px 12px 16px;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.7);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
             flex-shrink: 0;
             z-index: 100;
         }
 
-        .header-title {
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             flex: 1;
+            justify-content: center;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4cd964;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 8px;
         }
 
         .header-button {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border: none;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -63,10 +92,11 @@
             font-size: 16px;
             transition: all 0.2s ease;
             -webkit-appearance: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .header-button:active {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             transform: scale(0.95);
         }
 
@@ -132,16 +162,18 @@
         }
 
         .message-bubble {
-            padding: 10px 14px;
-            border-radius: 18px;
+            padding: 11px 16px;
+            border-radius: 20px;
             word-wrap: break-word;
             position: relative;
             font-size: 15px;
             line-height: 1.4;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
         }
 
         .message.user .message-bubble {
-            background: #0084ff;
+            background: linear-gradient(135deg, #0084ff 0%, #0066d4 100%);
             color: #fff;
             border-bottom-right-radius: 4px;
         }
@@ -150,14 +182,25 @@
             background: rgba(255, 255, 255, 0.12);
             color: #fff;
             border-bottom-left-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .message-unsend-btn {
+        .message-actions {
+            display: flex;
+            gap: 6px;
             opacity: 0;
-            width: 24px;
-            height: 24px;
+            transition: opacity 0.2s ease;
+        }
+
+        .message:hover .message-actions {
+            opacity: 1;
+        }
+
+        .message-btn {
+            width: 28px;
+            height: 28px;
             border: none;
-            background: rgba(255, 59, 48, 0.8);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -168,15 +211,32 @@
             transition: all 0.2s ease;
             flex-shrink: 0;
             -webkit-appearance: none;
+            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        .message:hover .message-unsend-btn {
-            opacity: 1;
+        .message-btn:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .message-unsend-btn {
+            background: rgba(255, 59, 48, 0.2);
+            color: #ff3b30;
+            border-color: rgba(255, 59, 48, 0.3);
         }
 
         .message-unsend-btn:active {
-            transform: scale(0.9);
-            background: rgb(255, 59, 48);
+            background: rgba(255, 59, 48, 0.3);
+        }
+
+        .message-copy-btn {
+            background: rgba(0, 132, 255, 0.2);
+            color: #0084ff;
+            border-color: rgba(0, 132, 255, 0.3);
+        }
+
+        .message-copy-btn:active {
+            background: rgba(0, 132, 255, 0.3);
         }
 
         /* Input Area */
@@ -184,7 +244,7 @@
             display: flex;
             gap: 8px;
             padding: 12px 16px max(12px, env(safe-area-inset-bottom)) 16px;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(0, 0, 0, 0.5);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(20px);
             flex-shrink: 0;
@@ -195,9 +255,17 @@
             display: flex;
             align-items: center;
             background: rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 0 12px;
+            border-radius: 24px;
+            padding: 0 14px;
             gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .input-wrapper:focus-within {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(0, 132, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 132, 255, 0.1);
         }
 
         textarea {
@@ -210,19 +278,19 @@
             font-family: inherit;
             resize: none;
             max-height: 100px;
-            padding: 8px 0;
+            padding: 10px 0;
             -webkit-appearance: none;
         }
 
         textarea::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
         }
 
         .send-btn {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
             border: none;
-            background: #0084ff;
+            background: linear-gradient(135deg, #0084ff 0%, #0066d4 100%);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -233,6 +301,7 @@
             transition: all 0.2s ease;
             flex-shrink: 0;
             -webkit-appearance: none;
+            box-shadow: 0 4px 12px rgba(0, 132, 255, 0.3);
         }
 
         .send-btn:active {
@@ -251,8 +320,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
             display: none;
             align-items: flex-end;
             z-index: 1000;
@@ -260,12 +329,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-overlay.active {
@@ -273,43 +338,41 @@
         }
 
         .settings-modal {
-            background: rgba(20, 20, 20, 0.98);
-            backdrop-filter: blur(20px);
+            background: rgba(15, 15, 15, 0.98);
+            backdrop-filter: blur(30px);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px 20px 0 0;
+            border-radius: 28px 28px 0 0;
             padding: max(24px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
             width: 100%;
             max-width: 100%;
             animation: slideUp 0.3s ease-out;
-            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+            max-height: 85vh;
+            overflow-y: auto;
         }
 
         @keyframes slideUp {
-            from {
-                transform: translateY(100%);
-            }
-            to {
-                transform: translateY(0);
-            }
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .modal-title {
-            font-size: 18px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
         }
 
         .close-btn {
-            width: 32px;
-            height: 32px;
+            width: 36px;
+            height: 36px;
             border: none;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -319,82 +382,91 @@
             font-size: 20px;
             transition: all 0.2s ease;
             -webkit-appearance: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .close-btn:active {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             transform: scale(0.95);
         }
 
         .settings-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .settings-label {
             display: block;
-            font-size: 14px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .api-key-input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 12px 14px;
             color: #fff;
             font-size: 14px;
             font-family: 'Courier New', monospace;
             -webkit-appearance: none;
             resize: none;
+            transition: all 0.2s ease;
         }
 
         .api-key-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.2);
         }
 
         .api-key-input:focus {
             outline: none;
-            border-color: #0084ff;
-            background: rgba(0, 132, 255, 0.05);
+            border-color: rgba(0, 132, 255, 0.4);
+            background: rgba(0, 132, 255, 0.04);
+            box-shadow: 0 0 20px rgba(0, 132, 255, 0.1);
         }
 
         .key-status {
             font-size: 12px;
-            margin-top: 6px;
-            padding: 6px 8px;
-            border-radius: 6px;
+            margin-top: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
             text-align: center;
+            font-weight: 500;
         }
 
         .key-status.valid {
             background: rgba(76, 217, 100, 0.15);
             color: #4cd964;
+            border: 1px solid rgba(76, 217, 100, 0.3);
         }
 
         .key-status.invalid {
             background: rgba(255, 59, 48, 0.15);
             color: #ff3b30;
+            border: 1px solid rgba(255, 59, 48, 0.3);
         }
 
         .settings-button {
             width: 100%;
             padding: 12px;
-            background: #0084ff;
+            background: linear-gradient(135deg, #0084ff 0%, #0066d4 100%);
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             color: #fff;
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
             -webkit-appearance: none;
+            box-shadow: 0 4px 12px rgba(0, 132, 255, 0.3);
         }
 
         .settings-button:active {
-            opacity: 0.8;
+            opacity: 0.9;
             transform: scale(0.98);
         }
 
@@ -404,13 +476,111 @@
         }
 
         .danger-button {
-            background: rgba(255, 59, 48, 0.2);
+            background: rgba(255, 59, 48, 0.15);
             color: #ff3b30;
-            margin-top: 12px;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(255, 59, 48, 0.2);
+            border: 1px solid rgba(255, 59, 48, 0.2);
         }
 
         .danger-button:active {
-            background: rgba(255, 59, 48, 0.3);
+            background: rgba(255, 59, 48, 0.25);
+        }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            box-shadow: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 10px;
+        }
+
+        .secondary-button:active {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .info-text {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 10px;
+            padding: 12px 14px;
+            background: rgba(0, 132, 255, 0.08);
+            border-radius: 10px;
+            border-left: 3px solid rgba(0, 132, 255, 0.4);
+            line-height: 1.5;
+        }
+
+        .get-key-link {
+            color: #0084ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .settings-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 20px 0;
+        }
+
+        .settings-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .settings-option:last-child {
+            border-bottom: none;
+        }
+
+        .option-label {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .option-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .option-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .toggle {
+            width: 44px;
+            height: 28px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            -webkit-appearance: none;
+        }
+
+        .toggle.active {
+            background: #0084ff;
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: all 0.2s ease;
+        }
+
+        .toggle.active::after {
+            left: 18px;
         }
 
         /* Loading Animation */
@@ -418,7 +588,7 @@
             display: flex;
             gap: 4px;
             align-items: center;
-            padding: 10px 14px;
+            padding: 11px 16px;
         }
 
         .typing-dot {
@@ -429,23 +599,12 @@
             animation: typing 1.4s infinite;
         }
 
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
         @keyframes typing {
-            0%, 60%, 100% {
-                opacity: 0.5;
-                transform: translateY(0);
-            }
-            30% {
-                opacity: 1;
-                transform: translateY(-8px);
-            }
+            0%, 60%, 100% { opacity: 0.5; transform: translateY(0); }
+            30% { opacity: 1; transform: translateY(-8px); }
         }
 
         /* Empty State */
@@ -460,50 +619,71 @@
         }
 
         .empty-state-icon {
-            font-size: 48px;
+            font-size: 56px;
             margin-bottom: 16px;
+            opacity: 0.8;
         }
 
         .empty-state-text {
             font-size: 16px;
             font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .empty-state-subtext {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
         }
 
         /* Error Message */
         .error-banner {
-            background: rgba(255, 59, 48, 0.15);
+            background: rgba(255, 59, 48, 0.12);
             border: 1px solid rgba(255, 59, 48, 0.3);
-            color: #ff3b30;
-            padding: 12px 16px;
+            color: #ff9500;
+            padding: 12px 14px;
             border-radius: 10px;
-            font-size: 14px;
+            font-size: 13px;
             margin: 0 16px;
             animation: slideIn 0.3s ease-out;
+            line-height: 1.4;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideUp 0.3s ease-out;
+            z-index: 999;
         }
 
         /* Responsive */
         @media (max-width: 400px) {
             .message {
-                max-width: 90%;
+                max-width: 92%;
             }
-
             .message-bubble {
                 font-size: 14px;
             }
         }
 
-        /* Safe area for notched devices */
+        /* Safe area */
         @supports (padding: max(0px)) {
             .header {
                 padding-left: max(16px, env(safe-area-inset-left));
                 padding-right: max(16px, env(safe-area-inset-right));
             }
-
             .input-area {
                 padding-left: max(16px, env(safe-area-inset-left));
                 padding-right: max(16px, env(safe-area-inset-right));
             }
-
             .messages-container {
                 padding-left: max(16px, env(safe-area-inset-left));
                 padding-right: max(16px, env(safe-area-inset-right));
@@ -514,14 +694,21 @@
 <body>
     <div class="header">
         <div style="width: 32px;"></div>
-        <div class="header-title">Claw</div>
-        <button class="header-button" id="settingsBtn">⚙️</button>
+        <div class="header-content">
+            <span class="header-status"></span>
+            <div class="header-title">Claw</div>
+        </div>
+        <div class="header-buttons">
+            <button class="header-button" id="shareBtn" title="Share">📤</button>
+            <button class="header-button" id="settingsBtn" title="Settings">⚙️</button>
+        </div>
     </div>
 
     <div class="messages-container" id="messagesContainer">
         <div class="empty-state">
             <div class="empty-state-icon">💬</div>
-            <div class="empty-state-text">Start a conversation with Claw</div>
+            <div class="empty-state-text">Chat with Claw</div>
+            <div class="empty-state-subtext">A chill friend who actually listens</div>
         </div>
     </div>
 
@@ -545,18 +732,44 @@
             </div>
 
             <div class="settings-group">
-                <label class="settings-label">OpenAI API Key</label>
+                <label class="settings-label">🔑 Groq API Key</label>
                 <textarea
                     id="apiKeyInput"
                     class="api-key-input"
-                    placeholder="sk-proj-..."
+                    placeholder="gsk_..."
                     rows="3"
                 ></textarea>
                 <div class="key-status" id="keyStatus" style="display: none;"></div>
+                <div class="info-text">
+                    Get your free key at <a href="https://console.groq.com" target="_blank" class="get-key-link">console.groq.com</a>. Never shared with our servers.
+                </div>
             </div>
 
+            <div class="settings-divider"></div>
+
+            <div class="settings-group">
+                <label class="settings-label">⚡ Preferences</label>
+                <div class="settings-option">
+                    <div class="option-label">
+                        <div class="option-name">Auto-copy responses</div>
+                        <div class="option-desc">Copy AI messages when clicked</div>
+                    </div>
+                    <button class="toggle active" id="autoCopyToggle"></button>
+                </div>
+                <div class="settings-option">
+                    <div class="option-label">
+                        <div class="option-name">Show timestamps</div>
+                        <div class="option-desc">Display message times</div>
+                    </div>
+                    <button class="toggle" id="timestampToggle"></button>
+                </div>
+            </div>
+
+            <div class="settings-divider"></div>
+
             <button class="settings-button" id="saveSettingsBtn">Save Settings</button>
-            <button class="settings-button danger-button" id="clearChatBtn">Clear Chat History</button>
+            <button class="settings-button secondary-button" id="exportChatBtn">📥 Export Chat</button>
+            <button class="settings-button danger-button" id="clearChatBtn">🗑️ Clear Chat History</button>
         </div>
     </div>
 
@@ -573,11 +786,13 @@
 
 Remember to always ask at least one follow-up question at the end of your responses to keep the conversation flowing naturally.`;
 
-        const API_BASE = 'https://api.openai.com/v1';
-        const MODEL = 'gpt-4o-mini';
+        const API_BASE = 'https://api.groq.com/openai/v1';
+        const MODEL = 'mixtral-8x7b-32768';
         const STORAGE_KEYS = {
-            API_KEY: 'claw_api_key',
-            CHAT_HISTORY: 'claw_chat_history'
+            API_KEY: 'claw_groq_api_key',
+            CHAT_HISTORY: 'claw_chat_history',
+            AUTO_COPY: 'claw_auto_copy',
+            SHOW_TIMESTAMPS: 'claw_show_timestamps'
         };
 
         // DOM Elements
@@ -585,20 +800,29 @@ Remember to always ask at least one follow-up question at the end of your respon
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
         const settingsBtn = document.getElementById('settingsBtn');
+        const shareBtn = document.getElementById('shareBtn');
         const settingsModal = document.getElementById('settingsModal');
         const closeSettings = document.getElementById('closeSettings');
         const apiKeyInput = document.getElementById('apiKeyInput');
         const keyStatus = document.getElementById('keyStatus');
         const saveSettingsBtn = document.getElementById('saveSettingsBtn');
         const clearChatBtn = document.getElementById('clearChatBtn');
+        const exportChatBtn = document.getElementById('exportChatBtn');
+        const autoCopyToggle = document.getElementById('autoCopyToggle');
+        const timestampToggle = document.getElementById('timestampToggle');
 
         // State
         let chatHistory = [];
         let isLoading = false;
+        let settings = {
+            autoCopy: true,
+            showTimestamps: false
+        };
 
         // Initialize
         function init() {
             loadChatHistory();
+            loadSettings();
             loadApiKey();
             setupEventListeners();
             renderMessages();
@@ -611,12 +835,16 @@ Remember to always ask at least one follow-up question at the end of your respon
             messageInput.addEventListener('input', handleInputResize);
             sendBtn.addEventListener('click', handleSendMessage);
             settingsBtn.addEventListener('click', () => openSettings());
+            shareBtn.addEventListener('click', handleShare);
             closeSettings.addEventListener('click', () => closeSettingsModal());
             settingsModal.addEventListener('click', (e) => {
                 if (e.target === settingsModal) closeSettingsModal();
             });
             saveSettingsBtn.addEventListener('click', handleSaveSettings);
             clearChatBtn.addEventListener('click', handleClearChat);
+            exportChatBtn.addEventListener('click', handleExportChat);
+            autoCopyToggle.addEventListener('click', () => autoCopyToggle.classList.toggle('active'));
+            timestampToggle.addEventListener('click', () => timestampToggle.classList.toggle('active'));
         }
 
         function handleInputKeydown(e) {
@@ -642,8 +870,7 @@ Remember to always ask at least one follow-up question at the end of your respon
                 return;
             }
 
-            // Add user message
-            chatHistory.push({ role: 'user', content: message });
+            chatHistory.push({ role: 'user', content: message, timestamp: Date.now() });
             messageInput.value = '';
             messageInput.style.height = 'auto';
             isLoading = true;
@@ -662,7 +889,7 @@ Remember to always ask at least one follow-up question at the end of your respon
                         model: MODEL,
                         messages: [
                             { role: 'system', content: SYSTEM_PROMPT },
-                            ...chatHistory
+                            ...chatHistory.map(msg => ({ role: msg.role, content: msg.content }))
                         ],
                         temperature: 0.7,
                         max_tokens: 500
@@ -670,18 +897,32 @@ Remember to always ask at least one follow-up question at the end of your respon
                 });
 
                 if (!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.error?.message || 'Failed to get response');
+                    let errorMessage = 'Failed to get response';
+                    try {
+                        const error = await response.json();
+                        errorMessage = error.error?.message || `Error: ${response.status}`;
+                    } catch (e) {
+                        if (response.status === 429) {
+                            errorMessage = 'Rate limited. Please try again soon.';
+                        } else if (response.status === 401) {
+                            errorMessage = 'Invalid API key. Please check your settings.';
+                        }
+                    }
+                    throw new Error(errorMessage);
                 }
 
                 const data = await response.json();
-                const aiMessage = data.choices[0].message.content;
-                chatHistory.push({ role: 'assistant', content: aiMessage });
+                const aiMessage = data.choices?.[0]?.message?.content;
+                
+                if (!aiMessage) {
+                    throw new Error('No response received');
+                }
+
+                chatHistory.push({ role: 'assistant', content: aiMessage, timestamp: Date.now() });
                 saveChatHistory();
             } catch (error) {
                 console.error('Error:', error);
-                showError(error.message);
-                // Remove the user message if there was an error
+                showError(error.message || 'An error occurred');
                 chatHistory.pop();
                 saveChatHistory();
             } finally {
@@ -698,13 +939,21 @@ Remember to always ask at least one follow-up question at the end of your respon
             renderMessages();
         }
 
+        function copyMessage(index) {
+            const text = chatHistory[index].content;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Copied to clipboard');
+            });
+        }
+
         // Rendering
         function renderMessages() {
             if (chatHistory.length === 0) {
                 messagesContainer.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-state-icon">💬</div>
-                        <div class="empty-state-text">Start a conversation with Claw</div>
+                        <div class="empty-state-text">Chat with Claw</div>
+                        <div class="empty-state-subtext">A chill friend who actually listens</div>
                     </div>
                 `;
                 return;
@@ -725,14 +974,24 @@ Remember to always ask at least one follow-up question at the end of your respon
 
                 message.appendChild(bubble);
 
+                const actions = document.createElement('div');
+                actions.className = 'message-actions';
+
+                const copyBtn = document.createElement('button');
+                copyBtn.className = 'message-btn message-copy-btn';
+                copyBtn.innerHTML = '📋';
+                copyBtn.onclick = () => copyMessage(index);
+                actions.appendChild(copyBtn);
+
                 if (msg.role === 'user') {
                     const unsendBtn = document.createElement('button');
-                    unsendBtn.className = 'message-unsend-btn';
+                    unsendBtn.className = 'message-btn message-unsend-btn';
                     unsendBtn.innerHTML = '✕';
                     unsendBtn.onclick = () => unsendMessage(index);
-                    message.appendChild(unsendBtn);
+                    actions.appendChild(unsendBtn);
                 }
 
+                message.appendChild(actions);
                 group.appendChild(message);
                 messagesContainer.appendChild(group);
             });
@@ -740,14 +999,11 @@ Remember to always ask at least one follow-up question at the end of your respon
             if (isLoading) {
                 const group = document.createElement('div');
                 group.className = 'message-group';
-
                 const message = document.createElement('div');
                 message.className = 'message ai';
-
                 const typing = document.createElement('div');
                 typing.className = 'typing-indicator';
                 typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
-
                 message.appendChild(typing);
                 group.appendChild(message);
                 messagesContainer.appendChild(group);
@@ -779,16 +1035,27 @@ Remember to always ask at least one follow-up question at the end of your respon
             }
         }
 
+        function loadSettings() {
+            const autoCopy = localStorage.getItem(STORAGE_KEYS.AUTO_COPY) !== 'false';
+            const showTimestamps = localStorage.getItem(STORAGE_KEYS.SHOW_TIMESTAMPS) === 'true';
+            
+            settings.autoCopy = autoCopy;
+            settings.showTimestamps = showTimestamps;
+            
+            if (autoCopy) autoCopyToggle.classList.add('active');
+            if (showTimestamps) timestampToggle.classList.add('active');
+        }
+
         function updateKeyStatus(key) {
             if (!key) {
                 keyStatus.style.display = 'none';
                 return;
             }
 
-            const isValid = key.startsWith('sk-proj-');
+            const isValid = key.startsWith('gsk_');
             keyStatus.style.display = 'block';
             keyStatus.className = `key-status ${isValid ? 'valid' : 'invalid'}`;
-            keyStatus.textContent = isValid ? '✓ Valid API Key Format' : '✗ Invalid API Key Format';
+            keyStatus.textContent = isValid ? '✓ Valid Groq API Key' : '✗ Invalid Groq API Key Format';
         }
 
         function handleSaveSettings() {
@@ -799,12 +1066,18 @@ Remember to always ask at least one follow-up question at the end of your respon
                 return;
             }
 
-            if (!apiKey.startsWith('sk-proj-')) {
+            if (!apiKey.startsWith('gsk_')) {
                 updateKeyStatus(apiKey);
                 return;
             }
 
             localStorage.setItem(STORAGE_KEYS.API_KEY, apiKey);
+            localStorage.setItem(STORAGE_KEYS.AUTO_COPY, autoCopyToggle.classList.contains('active'));
+            localStorage.setItem(STORAGE_KEYS.SHOW_TIMESTAMPS, timestampToggle.classList.contains('active'));
+            
+            settings.autoCopy = autoCopyToggle.classList.contains('active');
+            settings.showTimestamps = timestampToggle.classList.contains('active');
+            
             updateKeyStatus(apiKey);
             saveSettingsBtn.textContent = 'Saved!';
             setTimeout(() => {
@@ -814,11 +1087,42 @@ Remember to always ask at least one follow-up question at the end of your respon
         }
 
         function handleClearChat() {
-            if (confirm('Are you sure you want to clear all chat history? This cannot be undone.')) {
+            if (confirm('Clear all chat history? This cannot be undone.')) {
                 chatHistory = [];
                 saveChatHistory();
                 renderMessages();
                 closeSettingsModal();
+                showToast('Chat cleared');
+            }
+        }
+
+        function handleExportChat() {
+            const text = chatHistory.map(msg => {
+                const role = msg.role === 'user' ? 'You' : 'Claw';
+                return `${role}: ${msg.content}`;
+            }).join('\n\n');
+
+            const dataStr = "data:text/plain;charset=utf-8," + encodeURIComponent(text);
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `claw_chat_${Date.now()}.txt`);
+            downloadAnchor.click();
+            showToast('Chat exported');
+        }
+
+        function handleShare() {
+            if (chatHistory.length === 0) {
+                showToast('Nothing to share yet');
+                return;
+            }
+
+            const text = chatHistory.slice(-1)[0].content;
+            if (navigator.share) {
+                navigator.share({
+                    text: `Claw said: ${text}`,
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                copyMessage(chatHistory.length - 1);
             }
         }
 
@@ -838,13 +1142,21 @@ Remember to always ask at least one follow-up question at the end of your respon
             }
         }
 
-        // Error Handling
+        // Toast & Error Messages
         function showError(message) {
             const banner = document.createElement('div');
             banner.className = 'error-banner';
             banner.textContent = message;
             messagesContainer.insertAdjacentElement('afterbegin', banner);
-            setTimeout(() => banner.remove(), 4000);
+            setTimeout(() => banner.remove(), 5000);
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2000);
         }
 
         // Start

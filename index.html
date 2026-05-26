@@ -787,12 +787,13 @@
 Remember to always ask at least one follow-up question at the end of your responses to keep the conversation flowing naturally.`;
 
         const API_BASE = 'https://api.groq.com/openai/v1';
-        const MODEL = 'mixtral-8x7b-32768';
+        const MODELS = ['llama-3.3-70b-versatile', 'mistral-saba-24b'];
         const STORAGE_KEYS = {
             API_KEY: 'claw_groq_api_key',
             CHAT_HISTORY: 'claw_chat_history',
             AUTO_COPY: 'claw_auto_copy',
-            SHOW_TIMESTAMPS: 'claw_show_timestamps'
+            SHOW_TIMESTAMPS: 'claw_show_timestamps',
+            CURRENT_MODEL: 'claw_current_model'
         };
 
         // DOM Elements
@@ -814,6 +815,7 @@ Remember to always ask at least one follow-up question at the end of your respon
         // State
         let chatHistory = [];
         let isLoading = false;
+        let currentModel = MODELS[0];
         let settings = {
             autoCopy: true,
             showTimestamps: false
@@ -824,6 +826,7 @@ Remember to always ask at least one follow-up question at the end of your respon
             loadChatHistory();
             loadSettings();
             loadApiKey();
+            loadModel();
             setupEventListeners();
             renderMessages();
             messageInput.focus();
@@ -886,7 +889,7 @@ Remember to always ask at least one follow-up question at the end of your respon
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        model: MODEL,
+                        model: currentModel,
                         messages: [
                             { role: 'system', content: SYSTEM_PROMPT },
                             ...chatHistory.map(msg => ({ role: msg.role, content: msg.content }))
@@ -1044,6 +1047,13 @@ Remember to always ask at least one follow-up question at the end of your respon
             
             if (autoCopy) autoCopyToggle.classList.add('active');
             if (showTimestamps) timestampToggle.classList.add('active');
+        }
+
+        function loadModel() {
+            const saved = localStorage.getItem(STORAGE_KEYS.CURRENT_MODEL);
+            if (saved && MODELS.includes(saved)) {
+                currentModel = saved;
+            }
         }
 
         function updateKeyStatus(key) {

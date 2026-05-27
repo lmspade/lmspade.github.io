@@ -1158,7 +1158,7 @@ Remember: Be authentic. Be real. Be a friend.`;
                 showOnboarding();
             } else {
                 onboardingOverlay.classList.add('hidden');
-                setupEventListeners();
+                setupMainListeners();
                 renderMessages();
                 messageInput.focus();
             }
@@ -1167,7 +1167,16 @@ Remember: Be authentic. Be real. Be a friend.`;
         // Onboarding
         function showOnboarding() {
             currentOnboardingStep = 0;
+            setupOnboardingListeners();
             renderOnboardingStep();
+        }
+
+        function setupOnboardingListeners() {
+            nextBtn.addEventListener('click', handleOnboardingNext);
+            skipBtn.addEventListener('click', () => {
+                currentOnboardingStep = ONBOARDING_QUESTIONS.length - 1;
+                renderOnboardingStep();
+            });
         }
 
         function renderOnboardingStep() {
@@ -1200,6 +1209,7 @@ Remember: Be authentic. Be real. Be a friend.`;
                     btn.className = 'quiz-option';
                     btn.textContent = opt.label;
                     btn.dataset.value = opt.value;
+                    btn.type = 'button';
                     btn.onclick = () => selectOption(btn);
                     container.appendChild(btn);
                 });
@@ -1241,13 +1251,13 @@ Remember: Be authentic. Be real. Be a friend.`;
             localStorage.setItem(STORAGE_KEYS.ONBOARDING_DONE, 'true');
             localStorage.setItem(STORAGE_KEYS.USER_PROFILE, JSON.stringify(userProfile));
             onboardingOverlay.classList.add('hidden');
-            setupEventListeners();
+            setupMainListeners();
             renderMessages();
             messageInput.focus();
         }
 
-        // Event Listeners
-        function setupEventListeners() {
+        // Main Event Listeners
+        function setupMainListeners() {
             messageInput.addEventListener('keydown', handleInputKeydown);
             messageInput.addEventListener('input', handleInputResize);
             sendBtn.addEventListener('click', handleSendMessage);
@@ -1262,12 +1272,6 @@ Remember: Be authentic. Be real. Be a friend.`;
             exportChatBtn.addEventListener('click', handleExportChat);
             autoCopyToggle.addEventListener('click', toggleAutoCopy);
             timestampToggle.addEventListener('click', toggleTimestamps);
-
-            nextBtn.addEventListener('click', handleOnboardingNext);
-            skipBtn.addEventListener('click', () => {
-                currentOnboardingStep = ONBOARDING_QUESTIONS.length - 1;
-                renderOnboardingStep();
-            });
         }
 
         function handleInputKeydown(e) {

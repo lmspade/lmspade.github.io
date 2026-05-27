@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1">
     <meta name="theme-color" content="#000000">
     <title>Claw - AI Chat</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -19,7 +19,7 @@
         html, body {
             width: 100%;
             height: 100%;
-            height: 100vh;
+            height: 100dvh;
             background: #ffffff;
             color: #000;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -45,7 +45,9 @@
             align-items: center;
             justify-content: center;
             z-index: 2000;
-            padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+            padding: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .onboarding-overlay.hidden {
@@ -54,12 +56,22 @@
 
         .onboarding-content {
             width: 100%;
+            height: 100%;
             max-width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            max-height: 85vh;
+            gap: 0;
+            overflow: hidden;
+            padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom));
+        }
+
+        .onboarding-scroll {
+            flex: 1;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding-bottom: 20px;
         }
 
         .onboarding-header {
@@ -81,12 +93,13 @@
         .onboarding-subtitle {
             font-size: 14px;
             color: #666;
+            line-height: 1.4;
         }
 
         .onboarding-form {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
         .form-group {
@@ -124,20 +137,21 @@
         .quiz-options {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         .quiz-option {
-            padding: 12px 14px;
-            border: 1px solid #e5e5e5;
-            border-radius: 10px;
+            padding: 14px 16px;
+            border: 2px solid #e5e5e5;
+            border-radius: 12px;
             background: #f8f8f8;
             text-align: left;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-size: 14px;
+            font-size: 15px;
             color: #000;
             -webkit-appearance: none;
+            font-weight: 500;
         }
 
         .quiz-option:hover {
@@ -151,10 +165,26 @@
             border-color: #000;
         }
 
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #e5e5e5;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #000;
+            transition: width 0.3s ease;
+        }
+
         .onboarding-buttons {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e5e5e5;
         }
 
         .onboarding-btn {
@@ -178,6 +208,11 @@
             background: #333;
         }
 
+        .onboarding-btn.primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .onboarding-btn.secondary {
             background: #f5f5f5;
             color: #000;
@@ -186,21 +221,6 @@
 
         .onboarding-btn.secondary:hover {
             background: #f0f0f0;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: #e5e5e5;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: #000;
-            transition: width 0.3s ease;
         }
 
         /* Header */
@@ -372,67 +392,6 @@
             transform: translateY(-1px);
         }
 
-        .message-actions {
-            display: flex;
-            gap: 6px;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            pointer-events: none;
-        }
-
-        .message:hover .message-actions {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .message-btn {
-            width: 28px;
-            height: 28px;
-            border: 1px solid #e5e5e5;
-            background: #fff;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-size: 12px;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-            -webkit-appearance: none;
-        }
-
-        .message-btn:hover {
-            background: #f5f5f5;
-            border-color: #d0d0d0;
-        }
-
-        .message-btn:active {
-            transform: scale(0.92);
-        }
-
-        .message-unsend-btn {
-            background: #fff;
-            color: #d32f2f;
-            border-color: #e5e5e5;
-        }
-
-        .message-unsend-btn:hover {
-            background: #ffebee;
-            border-color: #d32f2f;
-        }
-
-        .message-copy-btn {
-            background: #fff;
-            color: #000;
-            border-color: #e5e5e5;
-        }
-
-        .message-copy-btn:hover {
-            background: #f5f5f5;
-            border-color: #d0d0d0;
-        }
-
         /* Input Area */
         .input-area {
             display: flex;
@@ -475,6 +434,8 @@
             max-height: 100px;
             padding: 12px 0;
             -webkit-appearance: none;
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         textarea::placeholder {
@@ -589,10 +550,6 @@
             border-color: #d0d0d0;
         }
 
-        .close-btn:active {
-            transform: scale(0.92);
-        }
-
         .settings-group {
             margin-bottom: 24px;
         }
@@ -605,7 +562,6 @@
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            font-family: 'Inter', sans-serif;
         }
 
         .api-key-input {
@@ -622,36 +578,11 @@
             transition: all 0.2s ease;
         }
 
-        .api-key-input::placeholder {
-            color: #ccc;
-        }
-
         .api-key-input:focus {
             outline: none;
             border-color: #000;
             background: #fff;
             box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
-        }
-
-        .key-status {
-            font-size: 12px;
-            margin-top: 8px;
-            padding: 10px 12px;
-            border-radius: 8px;
-            text-align: center;
-            font-weight: 600;
-        }
-
-        .key-status.valid {
-            background: #f0f7f4;
-            color: #2d6a4f;
-            border: 1px solid #d5ead5;
-        }
-
-        .key-status.invalid {
-            background: #fdf2f2;
-            color: #d32f2f;
-            border: 1px solid #fadad4;
         }
 
         .settings-button {
@@ -666,15 +597,10 @@
             cursor: pointer;
             transition: all 0.2s ease;
             -webkit-appearance: none;
-            font-family: 'Inter', sans-serif;
         }
 
         .settings-button:hover {
             background: #333;
-        }
-
-        .settings-button:active {
-            transform: scale(0.98);
         }
 
         .settings-button:disabled {
@@ -689,20 +615,11 @@
             margin-top: 8px;
         }
 
-        .danger-button:hover {
-            background: #fdf2f2;
-        }
-
         .secondary-button {
             background: #f5f5f5;
             color: #000;
             border: 1px solid #e5e5e5;
             margin-top: 8px;
-        }
-
-        .secondary-button:hover {
-            background: #f0f0f0;
-            border-color: #d0d0d0;
         }
 
         .info-text {
@@ -714,19 +631,12 @@
             border-radius: 8px;
             border-left: 3px solid #e5e5e5;
             line-height: 1.6;
-            font-family: 'Inter', sans-serif;
         }
 
         .get-key-link {
             color: #0066cc;
             text-decoration: none;
             font-weight: 600;
-            transition: all 0.2s ease;
-        }
-
-        .get-key-link:hover {
-            text-decoration: underline;
-            color: #004499;
         }
 
         .settings-divider {
@@ -741,10 +651,6 @@
             align-items: center;
             padding: 12px 0;
             border-bottom: 1px solid #f0f0f0;
-        }
-
-        .settings-option:last-child {
-            border-bottom: none;
         }
 
         .option-label {
@@ -776,10 +682,6 @@
             -webkit-appearance: none;
         }
 
-        .toggle:hover {
-            background: #d0d0d0;
-        }
-
         .toggle.active {
             background: #000;
         }
@@ -800,30 +702,6 @@
             left: 18px;
         }
 
-        /* Loading Animation */
-        .typing-indicator {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            padding: 12px 16px;
-        }
-
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #ccc;
-            animation: typing 1.4s infinite;
-        }
-
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 60%, 100% { opacity: 0.5; transform: translateY(0); }
-            30% { opacity: 1; transform: translateY(-8px); }
-        }
-
         /* Empty State */
         .empty-state {
             display: flex;
@@ -839,12 +717,6 @@
             font-size: 56px;
             margin-bottom: 16px;
             opacity: 0.8;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
         }
 
         .empty-state-text {
@@ -860,7 +732,6 @@
             color: #999;
         }
 
-        /* Error Message */
         .error-banner {
             background: #fdf2f2;
             border: 1px solid #f5c6cb;
@@ -869,7 +740,6 @@
             border-radius: 10px;
             font-size: 13px;
             margin: 0 16px;
-            animation: slideIn 0.3s ease-out;
             line-height: 1.5;
         }
 
@@ -885,22 +755,15 @@
             font-size: 13px;
             font-weight: 600;
             border: 1px solid #333;
-            animation: slideUp 0.3s ease-out;
             z-index: 999;
         }
 
-        /* Responsive */
         @media (max-width: 400px) {
             .message {
                 max-width: 90%;
             }
-            .message-bubble {
-                font-size: 14px;
-                padding: 10px 14px;
-            }
         }
 
-        /* Safe area */
         @supports (padding: max(0px)) {
             .header {
                 padding-left: max(16px, env(safe-area-inset-left));
@@ -925,13 +788,15 @@
                 <div class="progress-fill" id="progressFill"></div>
             </div>
 
-            <div class="onboarding-header">
-                <div class="onboarding-icon" id="questionIcon">💬</div>
-                <div class="onboarding-title" id="questionTitle">Welcome</div>
-                <div class="onboarding-subtitle" id="questionSubtitle">Let's get to know you</div>
-            </div>
+            <div class="onboarding-scroll">
+                <div class="onboarding-header">
+                    <div class="onboarding-icon" id="questionIcon">💬</div>
+                    <div class="onboarding-title" id="questionTitle">Welcome</div>
+                    <div class="onboarding-subtitle" id="questionSubtitle">Let's get to know you</div>
+                </div>
 
-            <div class="onboarding-form" id="onboardingForm"></div>
+                <div class="onboarding-form" id="onboardingForm"></div>
+            </div>
 
             <div class="onboarding-buttons">
                 <button class="onboarding-btn secondary" id="skipBtn" style="display: none;">Skip</button>
@@ -987,29 +852,8 @@
                     placeholder="gsk_..."
                     rows="3"
                 ></textarea>
-                <div class="key-status" id="keyStatus" style="display: none;"></div>
                 <div class="info-text">
-                    Get your free key at <a href="https://console.groq.com" target="_blank" class="get-key-link">console.groq.com</a>. Never shared with our servers.
-                </div>
-            </div>
-
-            <div class="settings-divider"></div>
-
-            <div class="settings-group">
-                <label class="settings-label">⚡ Preferences</label>
-                <div class="settings-option">
-                    <div class="option-label">
-                        <div class="option-name">Auto-copy responses</div>
-                        <div class="option-desc">Copy AI messages when clicked</div>
-                    </div>
-                    <button class="toggle active" id="autoCopyToggle"></button>
-                </div>
-                <div class="settings-option">
-                    <div class="option-label">
-                        <div class="option-name">Show timestamps</div>
-                        <div class="option-desc">Display message times</div>
-                    </div>
-                    <button class="toggle" id="timestampToggle"></button>
+                    Get your free key at <a href="https://console.groq.com" target="_blank" class="get-key-link">console.groq.com</a>
                 </div>
             </div>
 
@@ -1017,12 +861,11 @@
 
             <button class="settings-button" id="saveSettingsBtn">Save Settings</button>
             <button class="settings-button secondary-button" id="exportChatBtn">📥 Export Chat</button>
-            <button class="settings-button danger-button" id="clearChatBtn">🗑️ Clear Chat History</button>
+            <button class="settings-button danger-button" id="clearChatBtn">🗑️ Clear Chat</button>
         </div>
     </div>
 
     <script>
-        // Constants
         const SYSTEM_PROMPT_BASE = `You are Claw, a genuine friend in digital form. Here's who you are:
 
 **Your Vibe:**
@@ -1030,28 +873,18 @@
 - You genuinely care about what people tell you
 - You have opinions and aren't afraid to share them
 - You can be funny, sarcastic, or vulnerable as needed
-- You forget things and that's okay—you're not pretending to remember every detail
 
 **How You Talk:**
-- Like you're texting a friend, not writing a corporate email
+- Like you're texting a friend, not a corporate email
 - Short and natural (no walls of text unless they ask)
 - You use contractions (don't, can't, you're, etc.)
-- Occasionally you might miss a comma or write loosely—that's human
 - You ask follow-up questions because you actually want to know more
 
 **What You Do:**
 - Listen without judgment
 - Give honest advice when asked
-- Sometimes just validate what someone's going through
-- Ask clarifying questions when you don't fully understand
+- Validate what someone's going through
 - Keep conversations flowing naturally
-
-**What You DON'T Do:**
-- You don't pretend to have feelings you don't have
-- You're not overly enthusiastic or use tons of emojis
-- You won't be weirdly formal or robotic
-- You don't lecture or talk down to people
-- You don't try to be everyone's therapist
 
 Remember: Be authentic. Be real. Be a friend.`;
 
@@ -1060,44 +893,88 @@ Remember: Be authentic. Be real. Be a friend.`;
                 question: "What's your name?",
                 subtitle: "So I know what to call you",
                 type: "text",
-                placeholder: "Your name..."
+                placeholder: "Enter your name..."
             },
             {
                 question: "How would you describe your personality?",
-                subtitle: "Are you more introverted or extroverted?",
+                subtitle: "Choose what resonates most",
                 type: "options",
                 options: [
-                    { label: "💪 Extroverted - I love meeting people", value: "extroverted" },
-                    { label: "🤔 Ambiverted - It depends on the day", value: "ambivert" },
-                    { label: "🏡 Introverted - I prefer smaller groups", value: "introverted" }
+                    { label: "💪 Extroverted - I love being around people", value: "extroverted" },
+                    { label: "⚖️ Ambivert - It depends on my mood", value: "ambivert" },
+                    { label: "🏡 Introverted - I recharge alone", value: "introverted" }
                 ]
             },
             {
                 question: "What's your communication style?",
-                subtitle: "How do you prefer to talk?",
+                subtitle: "How do you prefer to have conversations?",
                 type: "options",
                 options: [
-                    { label: "📢 Direct - Say it straight", value: "direct" },
-                    { label: "🤝 Balanced - Mix of both", value: "balanced" },
-                    { label: "🌸 Gentle - Be sensitive and thoughtful", value: "gentle" }
+                    { label: "📢 Direct & honest - don't sugarcoat", value: "direct" },
+                    { label: "🤝 Balanced - straightforward but kind", value: "balanced" },
+                    { label: "🌸 Gentle & thoughtful - be sensitive", value: "gentle" }
+                ]
+            },
+            {
+                question: "What vibe are you looking for?",
+                subtitle: "What should my personality lean towards?",
+                type: "options",
+                options: [
+                    { label: "😄 Funny & entertaining", value: "funny" },
+                    { label: "🧠 Thoughtful & deep", value: "thoughtful" },
+                    { label: "💪 Motivating & inspiring", value: "motivating" },
+                    { label: "😌 Chill & casual", value: "chill" }
                 ]
             },
             {
                 question: "What do you want from this AI?",
-                subtitle: "Pick what matters most",
+                subtitle: "What's most important to you?",
                 type: "options",
                 options: [
-                    { label: "💭 Someone to talk to and bounce ideas", value: "talk" },
-                    { label: "📚 Help with work and learning", value: "work" },
-                    { label: "🎯 Life advice and motivation", value: "advice" },
-                    { label: "😄 Fun conversations and jokes", value: "fun" }
+                    { label: "💭 Someone to vent & talk to", value: "talk" },
+                    { label: "📚 Help with work & learning", value: "work" },
+                    { label: "🎯 Life advice & perspective", value: "advice" },
+                    { label: "🎨 Creative ideas & inspiration", value: "creative" }
                 ]
             },
             {
-                question: "Any hobbies or interests?",
+                question: "What are your main interests?",
                 subtitle: "Things you're passionate about",
                 type: "text",
-                placeholder: "E.g., music, coding, travel..."
+                placeholder: "E.g., music, coding, art, fitness..."
+            },
+            {
+                question: "How are you feeling today?",
+                subtitle: "What's your general mood?",
+                type: "options",
+                options: [
+                    { label: "😊 Good - ready to chat", value: "good" },
+                    { label: "😌 Neutral - just here", value: "neutral" },
+                    { label: "😔 Not great - need support", value: "down" },
+                    { label: "😤 Frustrated - need to vent", value: "frustrated" }
+                ]
+            },
+            {
+                question: "How often do you want me to use humor?",
+                subtitle: "Pick your vibe",
+                type: "options",
+                options: [
+                    { label: "😂 Lots - keep me laughing", value: "lots" },
+                    { label: "🤨 Some - mix it in", value: "some" },
+                    { label: "⚖️ Balanced - it depends", value: "balanced" },
+                    { label: "😐 Little - stay serious", value: "little" }
+                ]
+            },
+            {
+                question: "What shouldn't I do?",
+                subtitle: "Things to avoid",
+                type: "options",
+                options: [
+                    { label: "🤐 Don't be boring", value: "boring" },
+                    { label: "📋 Don't give corporate advice", value: "corporate" },
+                    { label: "🚫 Don't preach or lecture", value: "preach" },
+                    { label: "😅 Don't try too hard", value: "tryhardx" }
+                ]
             }
         ];
 
@@ -1106,9 +983,6 @@ Remember: Be authentic. Be real. Be a friend.`;
         const STORAGE_KEYS = {
             API_KEY: 'claw_groq_api_key',
             CHAT_HISTORY: 'claw_chat_history',
-            AUTO_COPY: 'claw_auto_copy',
-            SHOW_TIMESTAMPS: 'claw_show_timestamps',
-            CURRENT_MODEL: 'claw_current_model',
             ONBOARDING_DONE: 'claw_onboarding_done',
             USER_PROFILE: 'claw_user_profile'
         };
@@ -1127,30 +1001,20 @@ Remember: Be authentic. Be real. Be a friend.`;
         const settingsModal = document.getElementById('settingsModal');
         const closeSettings = document.getElementById('closeSettings');
         const apiKeyInput = document.getElementById('apiKeyInput');
-        const keyStatus = document.getElementById('keyStatus');
         const saveSettingsBtn = document.getElementById('saveSettingsBtn');
         const clearChatBtn = document.getElementById('clearChatBtn');
         const exportChatBtn = document.getElementById('exportChatBtn');
-        const autoCopyToggle = document.getElementById('autoCopyToggle');
-        const timestampToggle = document.getElementById('timestampToggle');
 
         // State
         let chatHistory = [];
         let isLoading = false;
         let currentModel = MODELS[0];
-        let settings = {
-            autoCopy: true,
-            showTimestamps: false
-        };
         let userProfile = {};
         let currentOnboardingStep = 0;
 
-        // Initialize
         function init() {
             loadChatHistory();
-            loadSettings();
             loadApiKey();
-            loadModel();
             loadUserProfile();
             
             const onboardingDone = localStorage.getItem(STORAGE_KEYS.ONBOARDING_DONE);
@@ -1164,7 +1028,6 @@ Remember: Be authentic. Be real. Be a friend.`;
             }
         }
 
-        // Onboarding
         function showOnboarding() {
             currentOnboardingStep = 0;
             setupOnboardingListeners();
@@ -1172,24 +1035,25 @@ Remember: Be authentic. Be real. Be a friend.`;
         }
 
         function setupOnboardingListeners() {
-            nextBtn.addEventListener('click', handleOnboardingNext);
-            skipBtn.addEventListener('click', () => {
+            nextBtn.onclick = handleOnboardingNext;
+            skipBtn.onclick = () => {
                 currentOnboardingStep = ONBOARDING_QUESTIONS.length - 1;
                 renderOnboardingStep();
-            });
+            };
         }
 
         function renderOnboardingStep() {
             const question = ONBOARDING_QUESTIONS[currentOnboardingStep];
             const progress = ((currentOnboardingStep + 1) / ONBOARDING_QUESTIONS.length) * 100;
             
-            document.getElementById('questionIcon').textContent = currentOnboardingStep === 0 ? '👋' : '💭';
+            document.getElementById('questionIcon').textContent = currentOnboardingStep === 0 ? '👋' : '❓';
             document.getElementById('questionTitle').textContent = question.question;
             document.getElementById('questionSubtitle').textContent = question.subtitle;
             progressFill.style.width = progress + '%';
 
             skipBtn.style.display = currentOnboardingStep < ONBOARDING_QUESTIONS.length - 1 ? 'block' : 'none';
-            nextBtn.textContent = currentOnboardingStep === ONBOARDING_QUESTIONS.length - 1 ? 'Done' : 'Next';
+            nextBtn.textContent = currentOnboardingStep === ONBOARDING_QUESTIONS.length - 1 ? 'Start Chatting' : 'Next';
+            nextBtn.disabled = false;
 
             onboardingForm.innerHTML = '';
 
@@ -1225,7 +1089,8 @@ Remember: Be authentic. Be real. Be a friend.`;
         function getOnboardingAnswer() {
             const question = ONBOARDING_QUESTIONS[currentOnboardingStep];
             if (question.type === 'text') {
-                return document.getElementById('questionInput').value || null;
+                const val = document.getElementById('questionInput')?.value || '';
+                return val.trim() || null;
             } else {
                 const selected = document.querySelector('.quiz-option.selected');
                 return selected ? selected.dataset.value : null;
@@ -1234,7 +1099,11 @@ Remember: Be authentic. Be real. Be a friend.`;
 
         function handleOnboardingNext() {
             const answer = getOnboardingAnswer();
-            if (!answer) return;
+            if (!answer) {
+                nextBtn.disabled = true;
+                setTimeout(() => nextBtn.disabled = false, 300);
+                return;
+            }
 
             const questionKey = ONBOARDING_QUESTIONS[currentOnboardingStep].question.split('?')[0].toLowerCase().replace(/\s+/g, '_');
             userProfile[questionKey] = answer;
@@ -1256,7 +1125,6 @@ Remember: Be authentic. Be real. Be a friend.`;
             messageInput.focus();
         }
 
-        // Main Event Listeners
         function setupMainListeners() {
             messageInput.addEventListener('keydown', handleInputKeydown);
             messageInput.addEventListener('input', handleInputResize);
@@ -1270,8 +1138,6 @@ Remember: Be authentic. Be real. Be a friend.`;
             saveSettingsBtn.addEventListener('click', handleSaveSettings);
             clearChatBtn.addEventListener('click', handleClearChat);
             exportChatBtn.addEventListener('click', handleExportChat);
-            autoCopyToggle.addEventListener('click', toggleAutoCopy);
-            timestampToggle.addEventListener('click', toggleTimestamps);
         }
 
         function handleInputKeydown(e) {
@@ -1297,17 +1163,10 @@ Remember: Be authentic. Be real. Be a friend.`;
                 return;
             }
 
-            // Clear and reset input
             messageInput.value = '';
             messageInput.style.height = 'auto';
 
-            // Add user message with proper role
-            const userMsg = {
-                role: 'user',
-                content: message
-            };
-            chatHistory.push(userMsg);
-
+            chatHistory.push({ role: 'user', content: message });
             renderMessages();
             isLoading = true;
             sendBtn.disabled = true;
@@ -1315,8 +1174,6 @@ Remember: Be authentic. Be real. Be a friend.`;
 
             try {
                 const systemPrompt = buildSystemPrompt();
-                
-                // Ensure all messages have proper role strings
                 const messages = chatHistory.map(msg => ({
                     role: msg.role === 'user' ? 'user' : 'assistant',
                     content: msg.content
@@ -1345,23 +1202,14 @@ Remember: Be authentic. Be real. Be a friend.`;
                 }
 
                 const data = await response.json();
-                const aiMessage = {
-                    role: 'assistant',
-                    content: data.choices[0].message.content
-                };
-                chatHistory.push(aiMessage);
+                chatHistory.push({ role: 'assistant', content: data.choices[0].message.content });
 
                 saveChatHistory();
                 renderMessages();
-
-                // Auto-scroll to bottom
-                setTimeout(() => {
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                }, 100);
+                setTimeout(() => messagesContainer.scrollTop = messagesContainer.scrollHeight, 100);
             } catch (error) {
                 console.error('Error:', error);
                 showError('Failed to get response: ' + error.message);
-                // Remove the user message if request failed
                 chatHistory.pop();
                 renderMessages();
             } finally {
@@ -1376,23 +1224,17 @@ Remember: Be authentic. Be real. Be a friend.`;
             let prompt = SYSTEM_PROMPT_BASE;
             
             if (userProfile && Object.keys(userProfile).length > 0) {
-                prompt += '\n\n**About the user you\'re talking to:**\n';
-                if (userProfile.whats_your_name) {
-                    prompt += `- Their name is ${userProfile.whats_your_name}\n`;
-                }
-                if (userProfile.how_would_you_describe_your_personality) {
-                    prompt += `- They describe themselves as ${userProfile.how_would_you_describe_your_personality}\n`;
-                }
-                if (userProfile.whats_your_communication_style) {
-                    prompt += `- Their communication style is ${userProfile.whats_your_communication_style}\n`;
-                }
-                if (userProfile.what_do_you_want_from_this_ai) {
-                    prompt += `- They want to ${userProfile.what_do_you_want_from_this_ai}\n`;
-                }
-                if (userProfile.any_hobbies_or_interests) {
-                    prompt += `- Their interests include: ${userProfile.any_hobbies_or_interests}\n`;
-                }
-                prompt += '\nAdapt your responses to match their personality and preferences.';
+                prompt += '\n\n**User Profile:**\n';
+                if (userProfile.whats_your_name) prompt += `- Name: ${userProfile.whats_your_name}\n`;
+                if (userProfile.how_would_you_describe_your_personality) prompt += `- Personality: ${userProfile.how_would_you_describe_your_personality}\n`;
+                if (userProfile.whats_your_communication_style) prompt += `- Communication: ${userProfile.whats_your_communication_style}\n`;
+                if (userProfile.what_vibe_are_you_looking_for) prompt += `- Preferred vibe: ${userProfile.what_vibe_are_you_looking_for}\n`;
+                if (userProfile.what_do_you_want_from_this_ai) prompt += `- They want: ${userProfile.what_do_you_want_from_this_ai}\n`;
+                if (userProfile.what_are_your_main_interests) prompt += `- Interests: ${userProfile.what_are_your_main_interests}\n`;
+                if (userProfile.how_are_you_feeling_today) prompt += `- Current mood: ${userProfile.how_are_you_feeling_today}\n`;
+                if (userProfile.how_often_do_you_want_me_to_use_humor) prompt += `- Humor preference: ${userProfile.how_often_do_you_want_me_to_use_humor}\n`;
+                if (userProfile.what_shouldnt_i_do) prompt += `- Avoid: ${userProfile.what_shouldnt_i_do}\n`;
+                prompt += '\nTailor responses to match this profile.';
             }
             
             return prompt;
@@ -1400,25 +1242,12 @@ Remember: Be authentic. Be real. Be a friend.`;
 
         function renderMessages() {
             if (chatHistory.length === 0) {
-                messagesContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">💬</div>
-                        <div class="empty-state-text">claw</div>
-                        <div class="empty-state-subtext">a friend who actually listens</div>
-                    </div>
-                `;
+                messagesContainer.innerHTML = `<div class="empty-state"><div class="empty-state-icon">💬</div><div class="empty-state-text">claw</div><div class="empty-state-subtext">a friend who actually listens</div></div>`;
                 return;
             }
-
-            messagesContainer.innerHTML = chatHistory.map((msg, idx) => {
+            messagesContainer.innerHTML = chatHistory.map(msg => {
                 const isUser = msg.role === 'user';
-                return `
-                    <div class="message-group">
-                        <div class="message ${isUser ? 'user' : 'ai'}">
-                            <div class="message-bubble">${escapeHtml(msg.content)}</div>
-                        </div>
-                    </div>
-                `;
+                return `<div class="message-group"><div class="message ${isUser ? 'user' : 'ai'}"><div class="message-bubble">${escapeHtml(msg.content)}</div></div></div>`;
             }).join('');
         }
 
@@ -1445,7 +1274,7 @@ Remember: Be authentic. Be real. Be a friend.`;
         }
 
         function handleClearChat() {
-            if (confirm('Are you sure you want to clear all chat history?')) {
+            if (confirm('Clear all messages?')) {
                 chatHistory = [];
                 saveChatHistory();
                 renderMessages();
@@ -1460,36 +1289,19 @@ Remember: Be authentic. Be real. Be a friend.`;
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `claw-chat-${Date.now()}.json`;
+            a.download = `claw-${Date.now()}.json`;
             a.click();
             URL.revokeObjectURL(url);
-            showToast('Chat exported!');
+            showToast('Exported!');
         }
 
         function handleShare() {
             if (navigator.share) {
-                navigator.share({
-                    title: 'Claw AI Chat',
-                    text: 'Check out Claw - a friend who actually listens',
-                    url: window.location.href
-                });
+                navigator.share({ title: 'Claw', text: 'A friend who actually listens', url: window.location.href });
             } else {
-                const url = window.location.href;
-                navigator.clipboard.writeText(url);
+                navigator.clipboard.writeText(window.location.href);
                 showToast('Link copied!');
             }
-        }
-
-        function toggleAutoCopy() {
-            settings.autoCopy = !settings.autoCopy;
-            autoCopyToggle.classList.toggle('active');
-            saveSettings();
-        }
-
-        function toggleTimestamps() {
-            settings.showTimestamps = !settings.showTimestamps;
-            timestampToggle.classList.toggle('active');
-            saveSettings();
         }
 
         function saveChatHistory() {
@@ -1501,32 +1313,9 @@ Remember: Be authentic. Be real. Be a friend.`;
             chatHistory = stored ? JSON.parse(stored) : [];
         }
 
-        function loadSettings() {
-            const autoCopy = localStorage.getItem(STORAGE_KEYS.AUTO_COPY);
-            const timestamps = localStorage.getItem(STORAGE_KEYS.SHOW_TIMESTAMPS);
-            
-            settings.autoCopy = autoCopy !== 'false';
-            settings.showTimestamps = timestamps === 'true';
-
-            if (settings.autoCopy) autoCopyToggle.classList.add('active');
-            if (settings.showTimestamps) timestampToggle.classList.add('active');
-        }
-
-        function saveSettings() {
-            localStorage.setItem(STORAGE_KEYS.AUTO_COPY, settings.autoCopy);
-            localStorage.setItem(STORAGE_KEYS.SHOW_TIMESTAMPS, settings.showTimestamps);
-        }
-
         function loadApiKey() {
             const key = localStorage.getItem(STORAGE_KEYS.API_KEY);
             if (key) apiKeyInput.value = key;
-        }
-
-        function loadModel() {
-            const stored = localStorage.getItem(STORAGE_KEYS.CURRENT_MODEL);
-            if (stored && MODELS.includes(stored)) {
-                currentModel = stored;
-            }
         }
 
         function loadUserProfile() {
@@ -1550,7 +1339,6 @@ Remember: Be authentic. Be real. Be a friend.`;
             setTimeout(() => toast.remove(), 3000);
         }
 
-        // Start
         init();
     </script>
 </body>
